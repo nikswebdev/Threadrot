@@ -1,0 +1,134 @@
+/* src/components/Products/FilterSortBar.css */
+
+.filter-sort-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0px;
+  /* CHANGED: Entire bar is now transparent with a subtle blur */
+  background: transparent;
+  backdrop-filter: blur(4px); /* Apply the subtle blur effect */
+  position: relative;
+  z-index: 15;
+}
+
+.control-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* CHANGED: Buttons are now transparent, inheriting background of parent */
+  background: transparent; /* Remove button's own background */
+  backdrop-filter: none; /* No blur on buttons themselves, blur from parent bar */
+  border: none;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  padding: 10px 0px; /* Keep internal padding for hover effect area */
+  border-radius: 4px; /* Keep for hover effect area */
+}
+
+.control-button:hover {
+  /* CHANGED: Hover effect with a very subtle background tint */
+  background: rgba(255, 255, 255, 0.08); /* White tint on hover */
+  color: white;
+}
+
+.control-button svg {
+  color: #888;
+  transition: color 0.2s ease;
+}
+
+.control-button:hover svg {
+  color: white;
+}
+
+/* === Filter Button (Left) === */
+.filter-button {
+  margin-left: 30px;
+}
+
+/* === Sort Button (Right) === */
+.sort-dropdown-wrapper {
+  position: relative;
+  margin-right: 30px;
+}
+
+.sort-button {
+  gap: 6px;
+  padding-right: 15px;
+}
+
+.sort-label {
+  color: #888;
+}
+
+.sort-value {
+  color: #bbb;
+}
+
+.sort-chevron {
+  transition: transform 0.2s ease;
+  margin-left: 4px;
+}
+
+.sort-chevron.open {
+  transform: rotate(180deg);
+  color: #00ff41;
+}
+
+/* === Dropdown Menu === */
+.sort-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  min-width: 200px;
+  /* Keep transparent dark background with blur for dropdown items */
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid #333;
+  padding: 8px 0;
+  z-index: 20;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
+.sort-option {
+  padding: 10px 20px;
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.sort-option:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.sort-option.active {
+  color: #00ff41;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+  .filter-button {
+    margin-left: 15px;
+  }
+  .sort-dropdown-wrapper {
+    margin-right: 15px;
+  }
+  .control-button {
+    padding: 8px 12px;
+  }
+  .sort-label {
+    display: none;
+  }
+}

@@ -1,8 +1,9 @@
+/* src/components/Layout/Header/TopMarquee.css */
 .top-marquee {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw; /* CHANGED: Use 100vw for more robust fixed sizing */
   background: #00ff41;
   color: #000;
   padding: 12px 0;
@@ -15,6 +16,7 @@
   border-bottom: 2px solid #000;
   margin: 0;
 }
+/* ... rest of the file ... */
 
 .marquee-content {
   display: flex;

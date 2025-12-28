@@ -1,0 +1,14 @@
+/* src/pages/Home.css */
+
+.home-page-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.product-grid-container {
+  width: 100%;
+  max-width: 1250px; /* Your requested max-width */
+  margin: 0 auto; /* Center the grid */
+  padding: 0 20px; /* Internal spacing */
+  box-sizing: border-box;
+}

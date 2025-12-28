@@ -2,10 +2,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
-  padding: 0 60px 60px 60px;
-  max-width: 100%;
-  box-sizing: border-box;
-  margin: 0 auto;
+  /* Remove fixed padding that might conflict with the container */
+  padding: 0;
+  /* Remove max-width if it exists here, let the parent container handle it */
+  width: 100%;
 }
 
 .no-products {

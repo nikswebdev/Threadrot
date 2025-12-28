@@ -2,31 +2,33 @@
 
 /* src/components/Layout/Navbar/MainNavbar.css */
 
+/* src/components/Layout/Navbar/MainNavbar.css */
+
+/* src/components/Layout/Navbar/MainNavbar.css */
+
+/* src/components/Layout/Navbar/MainNavbar.css */
+
 .main-navbar {
   position: sticky;
-  top: var(--marquee-height); /* Sticks below the TopMarquee */
+  top: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  /* NEW: Refined subtle gradient for desktop navbar */
   background: linear-gradient(
     to bottom,
     rgba(18, 18, 18, 0.95) 0%,
     rgba(18, 18, 18, 0.85) 100%
   );
   backdrop-filter: blur(8px);
-  /* REMOVED: border-bottom: 1px solid #333; */
-  z-index: 99;
+  /* CHANGED: z-index to 20, matching hero-section */
+  z-index: 20;
   color: white;
-  min-height: var(
-    --navbar-height-desktop
-  ); /* Use the CSS var from Layout.css */
-  box-sizing: border-box; /* Include padding in height calculation */
+  min-height: var(--navbar-height-desktop);
+  box-sizing: border-box;
 }
-
-/* ... (keep existing navbar-section, nav-link, dropdown styles) ... */
+/* ... rest of the file ... */
 
 /* NEW: Social Icons alignment (already done, just confirming its here) */
 .social-icons {

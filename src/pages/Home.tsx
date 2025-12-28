@@ -1,7 +1,8 @@
+// src/pages/Home.tsx
 import React from "react";
-// Remove HeroSection import
 import ProductGrid from "../components/Products/ProductGrid";
 import { useAppSelector } from "../hooks";
+import "./Home.css";
 
 const Home: React.FC = () => {
   const filteredProducts = useAppSelector(
@@ -9,8 +10,11 @@ const Home: React.FC = () => {
   );
 
   return (
-    // We removed HeroSection from here to let MainLayout handle the positioning
-    <ProductGrid products={filteredProducts} />
+    <div className="home-page-wrapper">
+      <div className="product-grid-container">
+        <ProductGrid products={filteredProducts} />
+      </div>
+    </div>
   );
 };
 

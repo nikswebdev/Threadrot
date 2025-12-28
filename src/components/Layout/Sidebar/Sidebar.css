@@ -1,119 +1,196 @@
-/* The wrapper component */
+/* src/components/Layout/Sidebar/Sidebar.css */
+
+/* Sidebar container */
 .sidebar-below-hero {
   width: 100%;
-  height: 100%; /* Fill the container */
-  padding: 40px 0;
+  height: 100%;
+  padding: 0;
+  background: transparent;
+  backdrop-filter: blur(4px);
   display: flex;
   flex-direction: column;
 }
 
 .sidebar-content {
-  padding: 0 30px;
+  padding: 0 30px; /* Internal padding for content */
+  /* REVERTED: Padding-top is now 20px (from when sidebar-header-vertical was removed) */
+  padding-top: 20px;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-/* Header Section */
-.sidebar-header-vertical {
-  margin-bottom: 40px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #333;
+/* REMOVED: .sidebar-logo-wrapper styles */
+
+/* --- Collapsible Item Styles --- */
+.sidebar-collapsible-item {
   width: 100%;
 }
 
-/* Status Text */
-.sidebar-status-vertical {
-  margin-top: 15px;
-  font-family: "Space Mono", monospace;
-  font-size: 11px;
-  color: #666;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  letter-spacing: 1px;
-}
-
-.status-indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #333;
-  display: inline-block;
-}
-
-.status-indicator.active {
-  background-color: #00ff41;
-  box-shadow: 0 0 8px #00ff41;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-/* Category List Styles */
-.vertical-category-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  flex: 1; /* Pushes footer down */
-}
-
-.vertical-category-item {
+/* Styling for the header (e.g., "Category", "Style") of each collapsible section */
+.sidebar-collapsible-item .collapsible-header {
   font-family: "Space Mono", monospace;
   font-size: 13px;
   color: #888;
-  cursor: pointer;
-  padding: 12px 15px;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
+  padding: 12px 0;
+  border-top: 1px solid #333; /* Border above each header */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 2px;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* Ensure the very first item has a top border for consistency */
+.sidebar-collapsible-item:first-child .collapsible-header {
+  border-top: 1px solid #333;
+}
+
+.collapsible-header span:first-child {
+  flex-grow: 1;
+}
+
+.collapsible-chevron {
+  transition: transform 0.2s ease;
+  color: #888;
+}
+
+.sidebar-collapsible-item .collapsible-header:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.collapsible-header.expanded {
+  color: white;
+  font-weight: bold;
+}
+
+.collapsible-header.expanded .collapsible-chevron {
+  transform: rotate(180deg);
+  color: white;
+}
+
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
   background: transparent;
 }
 
-.vertical-category-item:hover {
-  color: #fff;
+/* Individual filter options (e.g., "Vintage", "Black") */
+.sidebar-option {
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  color: #888;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  border-top: 1px solid #333; /* Border above each option */
+  background: transparent;
+}
+
+.sidebar-option:hover {
+  color: white;
   background: rgba(255, 255, 255, 0.03);
-  padding-left: 20px; /* Slight movement effect */
 }
 
-.vertical-category-item.active {
-  color: #000;
-  background: #00ff41;
-  border-color: #00ff41;
+.sidebar-option.active {
+  color: #00ff41;
   font-weight: bold;
-  box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
 }
 
-/* The year text inside items */
-.vertical-category-year {
-  font-size: 10px;
+.sidebar-option-year {
   opacity: 0.6;
+  font-size: 10px;
 }
 
-.vertical-category-item.active .vertical-category-year {
-  color: #000;
-  opacity: 0.8;
+/* --- In Stock Toggle Styles --- */
+.in-stock-toggle-wrapper {
+  border-top: 1px solid #333; /* Border above the toggle */
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 15px;
 }
 
-/* Footer Section */
+.toggle-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  color: #888;
+  user-select: none;
+  text-transform: uppercase;
+  padding: 0 0 0 0;
+}
+
+.toggle-switch {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: #333;
+  border-radius: 20px;
+  transition: background-color 0.4s;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.toggle-slider:before {
+  content: "";
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s;
+}
+
+.toggle-switch:checked + .toggle-slider {
+  background-color: #00ff41;
+}
+
+.toggle-switch:checked + .toggle-slider:before {
+  transform: translateX(20px);
+}
+
+.toggle-text {
+  color: #888;
+  transition: color 0.2s ease;
+}
+
+.toggle-switch:checked ~ .toggle-text {
+  color: white;
+}
+
+/* --- General List/Footer Styles --- */
+.vertical-category-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  border-bottom: 1px solid #333;
+}
+
+/* Sidebar footer */
 .sidebar-footer {
-  margin-top: auto; /* Pushes to bottom of sticky container */
-  padding-top: 30px;
+  margin-top: 30px;
+  padding-top: 20px;
   border-top: 1px solid #333;
 }
 
@@ -124,4 +201,44 @@
   line-height: 1.6;
   margin: 0;
   text-transform: uppercase;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .sidebar-content {
+    padding: 0 15px;
+    padding-top: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-below-hero {
+    padding: 0;
+  }
+  .sidebar-content {
+    padding-top: 10px;
+  }
+  /* REMOVED: .sidebar-logo-wrapper responsive styles */
+  .sidebar-collapsible-item .collapsible-header {
+    font-size: 12px;
+    padding: 10px 0;
+  }
+  .sidebar-option {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+  .toggle-label {
+    font-size: 12px;
+  }
+  .toggle-slider {
+    width: 35px;
+    height: 18px;
+  }
+  .toggle-slider:before {
+    height: 14px;
+    width: 14px;
+  }
+  .toggle-switch:checked + .toggle-slider:before {
+    transform: translateX(17px);
+  }
 }

@@ -8,7 +8,9 @@ import Sidebar from "./Sidebar/Sidebar";
 import MemeBackground from "../Background/MemeBackground";
 import HeroSection from "../Hero/HeroSection";
 import MainNavbar from "./Navbar/MainNavbar";
-import MobileHeader from "./Navbar/MobileHeader"; // Import MobileHeader
+import MobileHeader from "./Navbar/MobileHeader";
+import FilterSortBar from "../Products/FilterSortBar";
+
 import "./Layout.css";
 
 interface MainLayoutProps {
@@ -19,14 +21,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   useScreenSize();
   const screenWidth = useAppSelector((state) => state.ui.screenWidth);
   const location = useLocation();
-
+  const isMobile = screenWidth <= 768;
   const isHomePage = location.pathname === "/";
-  const isMobile = screenWidth <= 768; // Define mobile breakpoint
 
-  // Placeholder for mobile menu state (you'll expand this later)
   const handleHamburgerClick = () => {
-    console.log("Hamburger menu clicked!");
-    // TODO: Implement logic to open/close a mobile sidebar or full-screen menu
+    console.log("Menu clicked");
   };
 
   return (
@@ -36,15 +35,25 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <div className="main-content-wrapper">
         <MemeBackground screenWidth={screenWidth} />
 
-        {/* Conditional Navbar Rendering based on screen size */}
+        {/* 1. Navbar */}
         {isMobile ? (
           <MobileHeader onHamburgerClick={handleHamburgerClick} />
         ) : (
           <MainNavbar />
         )}
 
+        {/* 2. Hero Section (Full Width) */}
         {isHomePage && <HeroSection />}
 
+        {/* 3. Filter/Sort Bar (Full Width) - NEW LOCATION */}
+        {isHomePage && (
+          <FilterSortBar
+            onFilterClick={() => console.log("Filter")}
+            onSortClick={() => console.log("Sort")}
+          />
+        )}
+
+        {/* 4. The Split Layout (Sidebar + Content) */}
         <div className="content-split-layout">
           <aside className="layout-sidebar">
             <Sidebar />

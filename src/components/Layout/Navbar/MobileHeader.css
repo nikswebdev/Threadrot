@@ -1,23 +1,27 @@
 /* src/components/Layout/Navbar/MobileHeader.css */
 
+/* src/components/Layout/Navbar/MobileHeader.css */
+
+/* src/components/Layout/Navbar/MobileHeader.css */
+
 .mobile-header {
   position: sticky;
-  top: var(--marquee-height); /* Sticks below marquee */
+  /* CHANGED: Top is 0, as parent padding handles initial offset */
+  top: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 15px;
-  /* NEW: Refined subtle gradient for mobile header */
   background: linear-gradient(
     to bottom,
     rgba(18, 18, 18, 0.95) 0%,
     rgba(18, 18, 18, 0.85) 100%
   );
   backdrop-filter: blur(8px);
-  z-index: 99;
-  color: #bbb; /* Default icon color */
-  min-height: var(--navbar-height-mobile); /* Use the CSS var from Layout.css */
+  z-index: 1001;
+  color: #bbb;
+  min-height: var(--navbar-height-mobile);
 }
 
 .mobile-header-left,

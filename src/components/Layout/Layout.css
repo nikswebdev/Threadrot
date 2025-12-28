@@ -14,8 +14,8 @@
 }
 
 .main-content-wrapper {
-  /* REMOVE THIS LINE: */
-  /* margin-top: var(--marquee-height); */
+  /* CHANGED: Add padding-top equal to marquee height */
+  padding-top: var(--marquee-height);
   min-height: calc(100vh - var(--marquee-height));
   position: relative;
   width: 100%;
@@ -33,13 +33,14 @@
 }
 
 .layout-sidebar {
-  width: 300px;
-  flex-shrink: 0;
+  flex: 0 0 300px;
+  max-width: 300px;
   border-right: 1px solid #333;
   background: #121212;
   position: sticky;
-  top: calc(var(--marquee-height) + var(--navbar-height-desktop));
-  height: calc(100vh - (var(--marquee-height) + var(--navbar-height-desktop)));
+  /* CHANGED: Sidebar should stick right below the navbar */
+  top: var(--navbar-height-desktop);
+  height: calc(100vh - var(--navbar-height-desktop));
   overflow-y: auto;
   z-index: 20;
 }
@@ -58,11 +59,13 @@
 
   .layout-sidebar {
     width: 100%;
+    max-width: none;
     border-right: none;
     border-bottom: 1px solid #333;
     height: auto;
-    top: calc(var(--marquee-height) + var(--navbar-height-mobile));
-    height: calc(100vh - (var(--marquee-height) + var(--navbar-height-mobile)));
+    /* CHANGED: Sidebar should stick right below the mobile navbar */
+    top: var(--navbar-height-mobile);
+    height: calc(100vh - var(--navbar-height-mobile));
   }
 
   .layout-main-content {

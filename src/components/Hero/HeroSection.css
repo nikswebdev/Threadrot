@@ -7,7 +7,11 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  padding: 80px 0;
+  /* Keep top padding, removed bottom padding as per previous request */
+  padding-top: 80px;
+  padding-bottom: 40px;
+  padding-left: 0;
+  padding-right: 0;
   z-index: 20;
   margin-top: 0;
   overflow: hidden;
@@ -54,8 +58,7 @@
 
 .hero-line:last-child {
   font-size: 4.5rem;
-  /* CHANGED: Color of "MAKE IT" to white */
-  color: white; /* This now applies to "MAKE IT" */
+  color: white; /* Applies to "MAKE IT" */
   font-weight: 900;
   text-shadow: 0 0 10px rgba(0, 255, 65, 0.6), 0 0 20px rgba(0, 255, 65, 0.4);
 }
@@ -81,18 +84,17 @@
   }
 }
 
-/* Glitch effects (these rules remain but will render empty content
+/* Glitch effects (rules remain but will render empty content
    because `data-text` attribute was removed from `hero-line:last-child`) */
 .hero-line:last-child::before,
 .hero-line:last-child::after {
-  content: attr(data-text); /* This will be empty, so no content is rendered */
+  content: attr(data-text);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   opacity: 0.8;
-  /* Keeping glitch animations, though they won't be visible without content */
 }
 
 .hero-line:last-child::before {
@@ -171,7 +173,8 @@
 /* Small mobile devices */
 @media (max-width: 480px) {
   .hero-section {
-    padding: 60px 0;
+    padding-top: 60px;
+    padding-bottom: 0;
   }
   .hero-title {
     font-size: 2rem;
@@ -191,7 +194,8 @@
 /* Landscape mode optimization */
 @media (max-height: 500px) and (orientation: landscape) {
   .hero-section {
-    padding: 50px 0;
+    padding-top: 50px;
+    padding-bottom: 0;
   }
   .hero-content {
     padding: 20px 15px;
@@ -233,7 +237,7 @@
   .hero-line:last-child {
     color: #fff;
     text-shadow: 0 0 5px #000;
-  } /* Changed to white */
+  }
   .fashion-word {
     background: #00ff41;
     -webkit-text-fill-color: #00ff41;

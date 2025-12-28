@@ -3,7 +3,10 @@ export interface Category {
   label: string;
   year?: string;
 }
-
+export interface FilterOption {
+  id: string;
+  label: string;
+}
 export interface Product {
   id: number;
   name: string;

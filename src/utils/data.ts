@@ -1,4 +1,5 @@
-import { Product, Category } from "../types";
+// src/utils/data.ts
+import { Product, Category, FilterOption } from "../types";
 
 export const categories: Category[] = [
   { id: "ALL", label: "VIEW ALL" },
@@ -7,6 +8,38 @@ export const categories: Category[] = [
   { id: "SURREAL", label: "ERA: SURREAL", year: "2016-2020" },
   { id: "DEEPFRIED", label: "STATUS: DECAYED", year: "UNKNOWN" },
 ];
+
+// NEW: Filter data
+export const filterOptions: {
+  styles: FilterOption[];
+  colors: FilterOption[];
+  brands: FilterOption[];
+  sizes: FilterOption[];
+} = {
+  styles: [
+    { id: "VINTAGE", label: "Vintage" },
+    { id: "MODERN", label: "Modern" },
+    { id: "STREETWEAR", label: "Streetwear" },
+  ],
+  colors: [
+    { id: "BLACK", label: "Black" },
+    { id: "WHITE", label: "White" },
+    { id: "GREEN", label: "Green" },
+    { id: "GREY", label: "Grey" },
+    { id: "NEON", label: "Neon" },
+  ],
+  brands: [
+    { id: "THREADROT", label: "Threadrot" },
+    { id: "UNKNOWN_BRAND", label: "Unknown Brand" },
+  ],
+  sizes: [
+    { id: "XS", label: "XS" },
+    { id: "S", label: "S" },
+    { id: "M", label: "M" },
+    { id: "L", label: "L" },
+    { id: "XL", label: "XL" },
+  ],
+};
 
 export const productsData: Product[] = [
   {
