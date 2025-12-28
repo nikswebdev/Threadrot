@@ -1,0 +1,238 @@
+/* src/components/Background/MemeBackground.css */
+
+/* --- Wrapper for the entire meme background area --- */
+.background-meme-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Ensures it stays behind all content */
+  overflow: hidden; /* Important to clip memes outside the viewport */
+  pointer-events: none; /* Prevents memes from interfering with mouse events */
+}
+
+/* --- Base styles for each individual meme image --- */
+.background-meme-image {
+  position: absolute;
+  /* Opacity is controlled dynamically via inline style in MemeBackground.tsx */
+  filter: grayscale(100%) blur(1px); /* Default visual effect */
+  mix-blend-mode: overlay; /* Blends nicely with dark backgrounds */
+  transition: all 0.4s ease-in-out; /* Smooth transitions for changes */
+  transform-origin: center center; /* Consistent rotation origin */
+  user-select: none; /* Prevents selection of background memes */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensures entire image is visible within its bounds */
+
+  /* Default size for largest screens (15 memes) - balanced for spacing */
+  min-width: 120px;
+  width: 16%; /* Slightly reduced from 20% to help with overlap */
+  max-width: 350px; /* Reduced from 400px max */
+
+  display: block; /* By default, assume they are block elements, as JS will determine rendering */
+}
+
+/* --- Positioning for up to 15 meme slots (for large screens) --- */
+/* These positions are spread out to minimize overlap for 15 memes. */
+
+#bg-meme-0 {
+  top: 5%;
+  left: 5%;
+  width: 18%;
+  transform: rotate(10deg);
+}
+#bg-meme-1 {
+  bottom: 10%;
+  right: 8%;
+  width: 17%;
+  transform: rotate(-15deg);
+}
+#bg-meme-2 {
+  top: 30%;
+  left: 20%;
+  width: 16%;
+  transform: rotate(5deg);
+}
+#bg-meme-3 {
+  bottom: 20%;
+  right: 20%;
+  width: 15%;
+  transform: rotate(-25deg);
+}
+#bg-meme-4 {
+  top: 15%;
+  left: 50%;
+  width: 14%;
+  transform: rotate(30deg);
+}
+#bg-meme-5 {
+  bottom: 5%;
+  left: 15%;
+  width: 15%;
+  transform: rotate(-5deg);
+}
+#bg-meme-6 {
+  top: 50%;
+  right: 10%;
+  width: 14%;
+  transform: rotate(10deg);
+}
+#bg-meme-7 {
+  bottom: 40%;
+  left: 30%;
+  width: 14%;
+  transform: rotate(20deg);
+}
+#bg-meme-8 {
+  top: 10%;
+  left: 40%;
+  width: 16%;
+  transform: rotate(-10deg);
+}
+#bg-meme-9 {
+  bottom: 5%;
+  right: 45%;
+  width: 14%;
+  transform: rotate(5deg);
+}
+#bg-meme-10 {
+  top: 60%;
+  left: 5%;
+  width: 17%;
+  transform: rotate(-35deg);
+}
+#bg-meme-11 {
+  bottom: 30%;
+  right: 5%;
+  width: 15%;
+  transform: rotate(15deg);
+}
+#bg-meme-12 {
+  top: 5%;
+  left: 70%;
+  width: 18%;
+  transform: rotate(25deg);
+}
+#bg-meme-13 {
+  bottom: 70%;
+  left: 70%;
+  width: 13%;
+  transform: rotate(-5deg);
+}
+#bg-meme-14 {
+  top: 80%;
+  right: 20%;
+  width: 16%;
+  transform: rotate(45deg);
+}
+
+/* --- Responsive adjustments for meme image sizes and specific slots --- */
+
+@media (max-width: 1500px) {
+  .background-meme-image {
+    max-width: 300px; /* Slightly reduce max size for mid-large screens */
+    width: 18%; /* Adjusted for better spacing */
+  }
+}
+
+@media (max-width: 1200px) {
+  /* Screens where we render up to 6 memes */
+  .background-meme-image {
+    max-width: 250px; /* Further reduce max size */
+    width: 22%; /* Adjusted relative width */
+  }
+  /* Optimized positions for 6 memes to minimize overlap */
+  #bg-meme-0 {
+    top: 5%;
+    left: 5%;
+    width: 25%;
+    transform: rotate(10deg);
+  }
+  #bg-meme-1 {
+    bottom: 10%;
+    right: 5%;
+    width: 24%;
+    transform: rotate(-15deg);
+  }
+  #bg-meme-2 {
+    top: 25%;
+    left: 30%;
+    width: 23%;
+    transform: rotate(5deg);
+  }
+  #bg-meme-3 {
+    bottom: 25%;
+    left: 20%;
+    width: 22%;
+    transform: rotate(-25deg);
+  }
+  #bg-meme-4 {
+    top: 15%;
+    right: 30%;
+    width: 21%;
+    transform: rotate(30deg);
+  }
+  #bg-meme-5 {
+    bottom: 5%;
+    right: 15%;
+    width: 22%;
+    transform: rotate(-5deg);
+  }
+}
+
+@media (max-width: 700px) {
+  /* Screens where we render up to 3 memes */
+  .background-meme-image {
+    max-width: 200px; /* Even smaller max size */
+    width: 35%; /* Adjusted relative width */
+    filter: grayscale(100%) blur(0.5px); /* Less blur for higher visibility */
+  }
+  /* Optimized positions for 3 memes to minimize overlap and spread them out */
+  #bg-meme-0 {
+    top: 10%;
+    left: 5%;
+    width: 45%;
+    transform: rotate(15deg);
+  }
+  #bg-meme-1 {
+    bottom: 10%;
+    right: 5%;
+    width: 40%;
+    transform: rotate(-20deg);
+  }
+  #bg-meme-2 {
+    top: 35%;
+    left: 25%;
+    width: 38%;
+    transform: rotate(5deg);
+  }
+}
+
+@media (max-width: 599px) {
+  /* Screens where we render up to 2 memes */
+  .background-meme-image {
+    max-width: none; /* Allow width to scale freely within its slot */
+    width: 55%; /* Adjusted for 2 memes */
+    filter: grayscale(100%) blur(0.5px);
+  }
+  /* Optimized positions for 2 memes - slightly off-screen for effect, but less overlap */
+  #bg-meme-0 {
+    top: 5%;
+    left: -8%;
+    width: 60%;
+    transform: rotate(-5deg);
+  }
+  #bg-meme-1 {
+    bottom: 5%;
+    right: -8%;
+    width: 58%;
+    transform: rotate(10deg);
+  }
+}
+
+/* --- Accessibility: Reduce motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .background-meme-image {
+    transition: none; /* Disable transitions for users who prefer reduced motion */
+  }
+}

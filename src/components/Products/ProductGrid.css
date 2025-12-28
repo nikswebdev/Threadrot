@@ -1,0 +1,76 @@
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 0 60px 60px 60px;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.no-products {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+  grid-column: 1 / -1;
+}
+
+.back-to-all {
+  color: #00ff41;
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+  border: 1px solid #00ff41;
+  padding: 10px 20px;
+  transition: all 0.2s;
+}
+
+.back-to-all:hover {
+  background: #00ff41;
+  color: #000;
+}
+
+/* Ensure grid items don't create extra space */
+.product-grid > * {
+  min-width: 0; /* Prevent grid items from overflowing */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .product-grid {
+    padding: 0 40px 40px 40px;
+    gap: 25px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 0 30px 30px 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 0 20px 20px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 15px 20px 15px;
+  }
+}
+
+/* Prevent horizontal overflow */
+@media (max-width: 480px) {
+  .product-grid {
+    padding: 0 10px 20px 10px;
+    gap: 15px;
+  }
+}

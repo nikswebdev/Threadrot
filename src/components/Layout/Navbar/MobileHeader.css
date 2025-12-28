@@ -1,0 +1,71 @@
+/* src/components/Layout/Navbar/MobileHeader.css */
+
+.mobile-header {
+  position: sticky;
+  top: var(--marquee-height); /* Sticks below marquee */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  /* NEW: Refined subtle gradient for mobile header */
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 18, 18, 0.95) 0%,
+    rgba(18, 18, 18, 0.85) 100%
+  );
+  backdrop-filter: blur(8px);
+  z-index: 99;
+  color: #bbb; /* Default icon color */
+  min-height: var(--navbar-height-mobile); /* Use the CSS var from Layout.css */
+}
+
+.mobile-header-left,
+.mobile-header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Spacing for icons/elements */
+}
+
+.mobile-header-center {
+  flex: 1; /* Allow center to take available space */
+  display: flex;
+  justify-content: center; /* Center the logo */
+}
+
+.hamburger-menu {
+  background: none;
+  border: none;
+  color: #00ff41; /* Green color for hamburger icon */
+  cursor: pointer;
+  padding: 5px;
+  display: flex; /* For proper icon centering */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Override default logo link styling for mobile to fit */
+.mobile-header-center .navbar-logo-link {
+  height: var(--navbar-height-mobile); /* Match header height */
+  overflow: hidden; /* Hide excess if logo is too big */
+}
+.mobile-header-center .navbar-logo-link svg {
+  width: 120px; /* Adjust logo size */
+  height: auto;
+}
+/* Hide 'ARCHIVE' text and the green rectangle on mobile for smaller logo */
+.mobile-header-center .navbar-logo-link svg text:last-child,
+.mobile-header-center .navbar-logo-link svg rect {
+  display: none;
+}
+
+/* Social icons and cart within mobile header */
+.mobile-header-right .social-icons {
+  gap: 10px; /* Tighter spacing for mobile */
+}
+
+.mobile-header-right .social-icons svg,
+.mobile-header-right .shopping-cart-icon svg {
+  width: 18px; /* Smaller icons for mobile */
+  height: 18px;
+}

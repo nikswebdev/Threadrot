@@ -1,0 +1,239 @@
+/* src/components/Layout/Navbar/MainNavbar.css */
+
+/* src/components/Layout/Navbar/MainNavbar.css */
+
+.main-navbar {
+  position: sticky;
+  top: var(--marquee-height); /* Sticks below the TopMarquee */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  /* NEW: Refined subtle gradient for desktop navbar */
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 18, 18, 0.95) 0%,
+    rgba(18, 18, 18, 0.85) 100%
+  );
+  backdrop-filter: blur(8px);
+  /* REMOVED: border-bottom: 1px solid #333; */
+  z-index: 99;
+  color: white;
+  min-height: var(
+    --navbar-height-desktop
+  ); /* Use the CSS var from Layout.css */
+  box-sizing: border-box; /* Include padding in height calculation */
+}
+
+/* ... (keep existing navbar-section, nav-link, dropdown styles) ... */
+
+/* NEW: Social Icons alignment (already done, just confirming its here) */
+.social-icons {
+  display: flex;
+  gap: 15px; /* Spacing between social icons */
+}
+
+/* Mobile Responsiveness for Navbar */
+@media (max-width: 768px) {
+  .main-navbar {
+    display: none; /* Hide desktop navbar on mobile */
+  }
+}
+
+/* Remove this media query entirely as it's replaced by MobileHeader.css */
+/* @media (max-width: 768px) { ... } */
+
+/* ... (keep other media queries that are not for 768px breakpoint) ... */
+
+/* NEW: Ensure logo text is always visible on desktop nav */
+@media (max-width: 1000px) {
+  .navbar-logo-link svg text:last-child, /* Make ARCHIVE text visible */
+  .navbar-logo-link svg rect {
+    display: block; /* Show them on desktop */
+  }
+}
+
+.navbar-section {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.navbar-section.left {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.navbar-section.center {
+  flex: 2;
+  justify-content: center;
+  gap: 30px;
+}
+
+.navbar-section.right {
+  flex: 1;
+  justify-content: flex-end;
+  gap: 20px; /* NEW: Spacing between icons */
+}
+
+/* Navbar Logo */
+.navbar-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* NEW: Social Icons alignment */
+.social-icons {
+  display: flex;
+  gap: 15px; /* Spacing between social icons */
+}
+
+.nav-item-dropdown-wrapper {
+  position: relative;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-item-dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #bbb;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #00ff41;
+}
+
+.chevron {
+  transition: transform 0.2s ease;
+  color: #bbb;
+}
+
+.nav-item-dropdown-wrapper.open .chevron {
+  transform: rotate(180deg);
+  color: #00ff41;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 30, 30, 0.98);
+  border: 1px solid #00ff41;
+  border-radius: 4px;
+  min-width: 180px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  padding: 10px 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #bbb;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #00ff41;
+  color: #121212;
+}
+
+/* Social Icons & Shopping Cart */
+.social-icons a,
+.shopping-cart-icon {
+  color: #bbb;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.social-icons a:hover,
+.shopping-cart-icon:hover {
+  color: #00ff41;
+}
+
+/* Mobile Responsiveness for Navbar */
+@media (max-width: 1000px) {
+  .main-navbar {
+    padding: 10px 20px;
+    gap: 15px;
+    min-height: 45px; /* Adjust min-height for smaller screens */
+  }
+
+  .navbar-section.center {
+    gap: 20px;
+  }
+
+  .nav-link,
+  .dropdown-item {
+    font-size: 12px;
+  }
+
+  /* NEW: Logo scaling */
+  .navbar-logo-link svg {
+    width: 140px; /* Explicitly set width to scale */
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-navbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 15px;
+  }
+
+  .navbar-section.center {
+    display: none;
+  }
+
+  .navbar-section.left,
+  .navbar-section.right {
+    flex: 1; /* Allow them to fill space */
+    width: auto; /* Remove fixed width */
+  }
+
+  .navbar-section.left {
+    justify-content: flex-start;
+  }
+  .navbar-section.right {
+    justify-content: flex-end;
+  }
+
+  .navbar-logo-link svg {
+    width: 120px; /* Even smaller logo on very small screens */
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
+  .dropdown-menu {
+    transition: none;
+  }
+}

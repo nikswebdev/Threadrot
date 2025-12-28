@@ -1,0 +1,39 @@
+/* Prevent horizontal overflow globally */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.App {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure all containers are constrained */
+* {
+  box-sizing: border-box;
+}
+
+/* Prevent horizontal scrolling */
+body {
+  position: relative;
+  width: 100%;
+}
+/* In App.css or MainNavbar.css */
+
+@media (prefers-reduced-motion: reduce) {
+  .threadrot-logo-svg filter #rotFilter feTurbulence animate {
+    animation-play-state: paused !important; /* Pause the animation */
+  }
+}
+
+/* Temporary debug to see what's causing overflow */
+/* * {
+  outline: 1px solid red !important;
+} */

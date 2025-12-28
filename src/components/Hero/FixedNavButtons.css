@@ -1,0 +1,89 @@
+/* src/components/Hero/FixedNavButtons.css */
+
+.fixed-nav-buttons-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 50px;
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.fixed-nav-button {
+  display: inline-flex;
+  align-items: center;
+  /* UPDATED: Less top/bottom padding (from 12px 25px to 8px 25px) */
+  padding: 8px 25px;
+  border: 1px solid white;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  /* UPDATED: Font family to Roboto */
+  font-family: "Roboto", sans-serif; /* Add Roboto or similar */
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+  /* UPDATED: No underlines */
+  text-decoration: none; /* Ensure no underline */
+}
+
+.fixed-nav-button:hover {
+  background: #00ff41;
+  color: #121212;
+  border-color: #00ff41;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .fixed-nav-buttons-container {
+    gap: 15px;
+    margin-top: 30px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .fixed-nav-button {
+    /* UPDATED: Less padding for mobile too (from 10px 20px to 6px 20px) */
+    padding: 6px 20px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fixed-nav-buttons-container {
+    gap: 10px;
+    margin-top: 25px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .fixed-nav-button {
+    /* UPDATED: Less padding for small mobile (from 8px 15px to 4px 15px) */
+    padding: 4px 15px;
+    font-size: 11px;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .fixed-nav-button {
+    transition: none;
+    transform: none;
+  }
+  .fixed-nav-button:hover {
+    box-shadow: none;
+  }
+}
