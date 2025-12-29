@@ -1,27 +1,27 @@
-// src/pages/NewArrivals.tsx
+// src/pages/NewArrivals.tsx - FIXED
 import React, { useEffect } from "react";
 import { useAppDispatch } from "../hooks";
 import { setSortBy } from "../store/slices/productsSlice";
-import ProductGrid from "../components/Products/ProductGrid";
+import ProductGridContainer from "../components/Products/ProductGridContainer";
 import "./CategoryPage.css";
 
 const NewArrivals: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // Automatically sort by newest when entering this page
+    // Sort by newest when component mounts
     dispatch(setSortBy("Newest Arrivals"));
   }, [dispatch]);
 
   return (
     <div className="category-page">
       <div className="category-header">
-        <h1 className="category-title">NEW ARRIVALS</h1>
+        <h1>NEW ARRIVALS</h1>
         <p className="category-description">
-          Fresh drops. Latest memes. Newest additions to the archive.
+          Fresh drops from the archive. Limited quantities available.
         </p>
       </div>
-      <ProductGrid />
+      <ProductGridContainer />
     </div>
   );
 };

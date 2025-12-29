@@ -1,0 +1,110 @@
+/* src/components/UI/EmptyState.css */
+
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+  min-height: 400px;
+}
+
+.empty-state-icon {
+  margin-bottom: 24px;
+  color: #333;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.empty-state-title {
+  font-family: "Space Mono", monospace;
+  font-size: 24px;
+  font-weight: 700;
+  color: #666;
+  margin: 0 0 16px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.empty-state-description {
+  font-family: "Space Mono", monospace;
+  font-size: 14px;
+  color: #888;
+  line-height: 1.8;
+  margin: 0 0 32px 0;
+  max-width: 400px;
+  letter-spacing: 0.5px;
+}
+
+.empty-state-cta {
+  padding: 12px 32px;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: transparent;
+  border: 2px solid #00ff41;
+  color: #00ff41;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.empty-state-cta:hover {
+  background: rgba(0, 255, 65, 0.1);
+  transform: translateY(-2px);
+}
+
+.empty-state-cta:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .empty-state {
+    padding: 60px 20px;
+    min-height: 300px;
+  }
+
+  .empty-state-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .empty-state-title {
+    font-size: 20px;
+  }
+
+  .empty-state-description {
+    font-size: 13px;
+  }
+
+  .empty-state-cta {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .empty-state-icon {
+    animation: none;
+  }
+
+  .empty-state-cta {
+    transition: none;
+  }
+}

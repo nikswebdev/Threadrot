@@ -1,14 +1,17 @@
+// src/pages/Archive.tsx - FIXED
 import React from "react";
+import ProductGridContainer from "../components/Products/ProductGridContainer";
 
-const About: React.FC = () => {
+const Archive: React.FC = () => {
   return (
-    <div className="about-page">
-      <h1>About Threadrot</h1>
-      <p>Preserving internet culture through physical artifacts since 2023</p>
-      {/* About content here */}
+    <div className="archive-page">
+      <div className="archive-header">
+        <h1>ARCHIVE</h1>
+        <p>Browse our complete collection of meme artifacts</p>
+      </div>
+      <ProductGridContainer />
     </div>
   );
 };
 
-export default About;
-export {};
+export default Archive;

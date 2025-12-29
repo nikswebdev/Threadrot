@@ -1,36 +1,38 @@
+// src/pages/ProductDetail.tsx - FIXED
 import React, { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../hooks";
+import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { setSelectedProduct } from "../store/slices/productsSlice";
 import { Product } from "../types";
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
-  const product = useAppSelector((state) => state.products.selectedProduct);
   const products = useAppSelector((state) => state.products.items);
+  const selectedProduct = useAppSelector(
+    (state) => state.products.selectedProduct
+  );
 
   useEffect(() => {
     if (id) {
-      const foundProduct = products.find((p: Product) => p.id === parseInt(id));
+      // id is string, p.id is string - no need to parseInt!
+      const foundProduct = products.find((p: Product) => p.id === id);
       dispatch(setSelectedProduct(foundProduct));
     }
   }, [id, products, dispatch]);
 
-  if (!product) {
-    return <div>Product not found</div>;
+  if (!selectedProduct) {
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="product-detail">
-      <Link to="/" className="back-button">
-        ← Back to Archive
-      </Link>
-      <h1>{product.name}</h1>
-      {/* Add product detail content */}
+      <h1>{selectedProduct.name}</h1>
+      <img src={selectedProduct.image} alt={selectedProduct.name} />
+      <p>${selectedProduct.price.toFixed(2)}</p>
+      <p>{selectedProduct.description}</p>
     </div>
   );
 };
 
 export default ProductDetail;
-export {}; // Make it a module

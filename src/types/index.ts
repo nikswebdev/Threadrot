@@ -1,4 +1,23 @@
-// src/types/index.ts
+// src/types/index.ts - COMPLETE WITH ALL UI PROPERTIES
+
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  category: string;
+  description?: string;
+  dateAdded?: string;
+
+  // Enhanced product card fields
+  hoverImage?: string;
+  isNew?: boolean;
+  isLowStock?: boolean;
+  isTrending?: boolean;
+  stockCount?: number;
+  inStock?: boolean;
+}
+
 export interface Category {
   id: string;
   label: string;
@@ -10,48 +29,24 @@ export interface FilterOption {
   label: string;
 }
 
-export interface Product {
-  id: number;
-  name: string;
-  price: string;
-  era: string;
-  category: string;
-  rot: string;
-  description?: string;
-  images?: string[];
-  // NEW: Filter properties
-  style?: string;
-  color?: string;
-  brand?: string;
-  sizes?: string[];
-  inStock?: boolean;
-  dateAdded?: string; // For sorting by newest
+export interface FilterOptions {
+  styles: FilterOption[];
+  colors: FilterOption[];
+  brands: FilterOption[];
+  sizes: FilterOption[];
 }
 
-export interface AppState {
-  ui: UIState;
-  products: ProductsState;
+// Redux state types
+export interface ProductsState {
+  items: Product[];
+  filteredItems: Product[];
+  selectedProduct: Product | null;
 }
 
 export interface UIState {
   activeCategory: string;
-  screenWidth: number;
-  isLoading: boolean;
-  gridView: "grid" | "compact"; // NEW: Grid view state
-}
-
-export interface ProductsState {
-  items: Product[];
-  filteredItems: Product[];
-  selectedProduct?: Product;
-  // NEW: Active filters
-  filters: {
-    category: string;
-    style: string;
-    color: string;
-    brand: string;
-    size: string;
-    inStock: boolean;
-  };
-  sortBy: string; // NEW: Active sort option
+  selectedProduct: Product | null;
+  gridView: "grid" | "compact";
+  screenWidth: number; // Added
+  isLoading: boolean; // Added
 }

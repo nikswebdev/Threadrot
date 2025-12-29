@@ -1,14 +1,18 @@
-// src/pages/Home.tsx
+// src/pages/Home.tsx - FIXED
 import React from "react";
-import ProductGrid from "../components/Products/ProductGrid";
+import ProductGridContainer from "../components/Products/ProductGridContainer";
 import "./Home.css";
 
 const Home: React.FC = () => {
-  // ProductGrid now gets products from Redux directly, no props needed
+  const handleClearFilters = () => {
+    // Clear all filters logic here
+    console.log("Clear all filters");
+  };
+
   return (
     <div className="home-page-wrapper">
       <div className="product-grid-container">
-        <ProductGrid />
+        <ProductGridContainer onClearFilters={handleClearFilters} />
       </div>
     </div>
   );
