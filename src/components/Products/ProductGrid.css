@@ -1,11 +1,22 @@
+/* src/components/Products/ProductGrid.css */
+
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
-  /* Remove fixed padding that might conflict with the container */
   padding: 0;
-  /* Remove max-width if it exists here, let the parent container handle it */
   width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* Grid View (Default) */
+.product-grid.grid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+}
+
+/* Compact View */
+.product-grid.compact {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+  gap: 20px;
 }
 
 .no-products {
@@ -13,6 +24,18 @@
   padding: 60px 20px;
   color: #888;
   grid-column: 1 / -1;
+}
+
+.no-products h3 {
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.no-products p {
+  margin-bottom: 25px;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
 }
 
 .back-to-all {
@@ -23,6 +46,9 @@
   border: 1px solid #00ff41;
   padding: 10px 20px;
   transition: all 0.2s;
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 .back-to-all:hover {
@@ -30,47 +56,137 @@
   color: #000;
 }
 
-/* Ensure grid items don't create extra space */
 .product-grid > * {
-  min-width: 0; /* Prevent grid items from overflowing */
+  min-width: 0;
 }
 
-/* Responsive adjustments */
+/* Skeleton styles */
+.skeleton {
+  animation: skeleton-loading 1.5s infinite ease-in-out;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.skeleton-text {
+  height: 14px;
+  background: #333;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.skeleton-short {
+  width: 80px;
+}
+
+.skeleton-title {
+  height: 24px;
+  width: 70%;
+  margin-bottom: 15px;
+}
+
+.skeleton-header {
+  opacity: 0.6;
+}
+
+.skeleton-image {
+  background: #222 !important;
+  animation: skeleton-loading 1.5s infinite ease-in-out;
+}
+
+.skeleton-button {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive breakpoints */
 @media (max-width: 1200px) {
   .product-grid {
     padding: 0 40px 40px 40px;
     gap: 25px;
   }
+  .product-grid.compact {
+    gap: 18px;
+  }
 }
 
 @media (max-width: 1000px) {
+  .product-grid.grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  }
+  .product-grid.compact {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  }
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
     padding: 0 30px 30px 30px;
   }
 }
 
-@media (max-width: 768px) {
+/* SIDEBAR HIDDEN RANGE: 769-996px - 3 columns with full width! */
+@media (max-width: 996px) and (min-width: 769px) {
+  .product-grid.grid {
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ) !important; /* 3 columns - more space! */
+    gap: 20px;
+  }
+  .product-grid.compact {
+    grid-template-columns: repeat(3, 1fr) !important; /* Also 3 columns */
+    gap: 15px; /* Tighter gap for compact */
+  }
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    padding: 0 30px 30px 30px;
+  }
+}
+
+/* Mobile: 768px and below - 2 columns */
+@media (max-width: 768px) {
+  .product-grid.grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+  }
+  .product-grid.compact {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+  }
+  .product-grid {
     gap: 20px;
     padding: 0 20px 20px 20px;
   }
 }
 
-@media (max-width: 600px) {
+/* 600-650px: 2 columns for both views */
+@media (max-width: 650px) and (min-width: 401px) {
+  .product-grid.grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px;
+  }
+  .product-grid.compact {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px;
+  }
   .product-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
     padding: 0 15px 20px 15px;
   }
 }
 
-/* Prevent horizontal overflow */
-@media (max-width: 480px) {
+/* Very small screens: 1 column only */
+@media (max-width: 400px) {
+  .product-grid.grid,
+  .product-grid.compact {
+    grid-template-columns: 1fr !important;
+    gap: 15px;
+  }
   .product-grid {
     padding: 0 10px 20px 10px;
-    gap: 15px;
   }
 }

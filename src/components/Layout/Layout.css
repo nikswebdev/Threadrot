@@ -1,9 +1,10 @@
-/* src/components/Layout/Layout.css */
+/* src/components/Layout/Layout.css - FIXED for sticky positioning */
 
 :root {
   --marquee-height: 50px;
   --navbar-height-desktop: 60px;
   --navbar-height-mobile: 45px;
+  --sidebar-width: 300px;
 }
 
 .main-app-container {
@@ -11,14 +12,17 @@
   position: relative;
   background: #121212;
   width: 100%;
+  /* REMOVED: overflow-x: hidden - This was breaking sticky! */
+  margin: 0;
+  padding: 0;
 }
 
 .main-content-wrapper {
-  /* CHANGED: Add padding-top equal to marquee height */
-  padding-top: var(--marquee-height);
+  /* NO padding-top needed since marquee is not fixed */
   min-height: calc(100vh - var(--marquee-height));
   position: relative;
   width: 100%;
+  margin: 0;
 }
 
 .content-split-layout {
@@ -33,14 +37,13 @@
 }
 
 .layout-sidebar {
-  flex: 0 0 300px;
-  max-width: 300px;
+  flex: 0 0 var(--sidebar-width);
+  max-width: var(--sidebar-width);
   border-right: 1px solid #333;
   background: #121212;
   position: sticky;
-  /* CHANGED: Sidebar should stick right below the navbar */
-  top: var(--navbar-height-desktop);
-  height: calc(100vh - var(--navbar-height-desktop));
+  top: calc(var(--marquee-height) + var(--navbar-height-desktop));
+  height: calc(100vh - var(--marquee-height) - var(--navbar-height-desktop));
   overflow-y: auto;
   z-index: 20;
 }
@@ -51,24 +54,42 @@
   min-width: 0;
 }
 
-/* Responsive: Mobile Layout adjustments */
-@media (max-width: 900px) {
-  .content-split-layout {
-    flex-direction: column;
+/* Hide sidebar below 997px - FilterSortBar handles filtering */
+@media (max-width: 996px) {
+  .layout-sidebar {
+    display: none;
   }
 
-  .layout-sidebar {
-    width: 100%;
-    max-width: none;
-    border-right: none;
-    border-bottom: 1px solid #333;
-    height: auto;
-    /* CHANGED: Sidebar should stick right below the mobile navbar */
-    top: var(--navbar-height-mobile);
-    height: calc(100vh - var(--navbar-height-mobile));
+  .layout-main-content {
+    padding: 30px 40px;
+  }
+}
+
+/* Mobile Layout */
+@media (max-width: 768px) {
+  .content-split-layout {
+    flex-direction: column;
   }
 
   .layout-main-content {
     padding: 20px;
   }
+}
+
+/* Sidebar scrollbar styling */
+.layout-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.layout-sidebar::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.layout-sidebar::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+.layout-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #444;
 }

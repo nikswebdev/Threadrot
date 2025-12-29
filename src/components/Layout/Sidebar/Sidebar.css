@@ -1,4 +1,4 @@
-/* src/components/Layout/Sidebar/Sidebar.css */
+/* src/components/Layout/Sidebar/Sidebar.css - OPTION 2: Modern & Clean */
 
 /* Sidebar container */
 .sidebar-below-hero {
@@ -12,41 +12,45 @@
 }
 
 .sidebar-content {
-  padding: 0 30px; /* Internal padding for content */
-  /* REVERTED: Padding-top is now 20px (from when sidebar-header-vertical was removed) */
-  padding-top: 20px;
+  padding: 20px 20px;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 15px; /* Space between sections */
 }
-
-/* REMOVED: .sidebar-logo-wrapper styles */
 
 /* --- Collapsible Item Styles --- */
 .sidebar-collapsible-item {
   width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s ease;
 }
 
-/* Styling for the header (e.g., "Category", "Style") of each collapsible section */
+.sidebar-collapsible-item:hover {
+  border-color: rgba(0, 255, 65, 0.2);
+}
+
+/* Section header (e.g., "Category", "Style") */
 .sidebar-collapsible-item .collapsible-header {
   font-family: "Space Mono", monospace;
-  font-size: 13px;
-  color: #888;
-  padding: 12px 0;
-  border-top: 1px solid #333; /* Border above each header */
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  padding: 15px 15px 12px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  background: transparent;
+  background: rgba(0, 255, 65, 0.03);
   transition: all 0.2s ease;
   user-select: none;
-}
-
-/* Ensure the very first item has a top border for consistency */
-.sidebar-collapsible-item:first-child .collapsible-header {
-  border-top: 1px solid #333;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .collapsible-header span:first-child {
@@ -55,22 +59,27 @@
 
 .collapsible-chevron {
   transition: transform 0.2s ease;
-  color: #888;
+  color: #666;
 }
 
 .sidebar-collapsible-item .collapsible-header:hover {
-  color: white;
-  background: rgba(255, 255, 255, 0.03);
+  color: #00ff41;
+  background: rgba(0, 255, 65, 0.05);
+}
+
+.sidebar-collapsible-item .collapsible-header:hover .collapsible-chevron {
+  color: #00ff41;
 }
 
 .collapsible-header.expanded {
-  color: white;
-  font-weight: bold;
+  color: #00ff41;
+  background: rgba(0, 255, 65, 0.08);
+  border-bottom-color: rgba(0, 255, 65, 0.2);
 }
 
 .collapsible-header.expanded .collapsible-chevron {
   transform: rotate(180deg);
-  color: white;
+  color: #00ff41;
 }
 
 .collapsible-content {
@@ -86,36 +95,49 @@
 .sidebar-option {
   font-family: "Space Mono", monospace;
   font-size: 12px;
-  color: #888;
-  padding: 8px 15px;
+  color: #999;
+  padding: 12px 15px;
   cursor: pointer;
   transition: all 0.2s ease;
   text-transform: uppercase;
-  border-top: 1px solid #333; /* Border above each option */
   background: transparent;
+  border-left: 3px solid transparent;
+  letter-spacing: 0.5px;
 }
 
 .sidebar-option:hover {
   color: white;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.05);
+  border-left-color: #00ff41;
+  padding-left: 18px; /* Slight indent on hover */
 }
 
 .sidebar-option.active {
   color: #00ff41;
-  font-weight: bold;
+  font-weight: 700;
+  background: rgba(0, 255, 65, 0.08);
+  border-left-color: #00ff41;
+  padding-left: 18px;
 }
 
 .sidebar-option-year {
   opacity: 0.6;
   font-size: 10px;
+  margin-left: 6px;
 }
 
 /* --- In Stock Toggle Styles --- */
 .in-stock-toggle-wrapper {
-  border-top: 1px solid #333; /* Border above the toggle */
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-top: 15px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s ease;
+}
+
+.in-stock-toggle-wrapper:hover {
+  border-color: rgba(0, 255, 65, 0.2);
 }
 
 .toggle-label {
@@ -125,11 +147,13 @@
   width: 100%;
   cursor: pointer;
   font-family: "Space Mono", monospace;
-  font-size: 13px;
-  color: #888;
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
   user-select: none;
   text-transform: uppercase;
-  padding: 0 0 0 0;
+  letter-spacing: 1.5px;
+  padding: 0;
 }
 
 .toggle-switch {
@@ -140,13 +164,14 @@
 
 .toggle-slider {
   position: relative;
-  width: 40px;
-  height: 20px;
-  background-color: #333;
-  border-radius: 20px;
-  transition: background-color 0.4s;
-  margin-right: 15px;
+  width: 42px;
+  height: 22px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  transition: background-color 0.3s;
+  margin-right: 12px;
   flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .toggle-slider:before {
@@ -156,26 +181,40 @@
   width: 16px;
   left: 2px;
   bottom: 2px;
-  background-color: white;
+  background-color: #666;
   border-radius: 50%;
-  transition: transform 0.4s;
+  transition: transform 0.3s, background-color 0.3s;
 }
 
 .toggle-switch:checked + .toggle-slider {
-  background-color: #00ff41;
+  background-color: rgba(0, 255, 65, 0.2);
+  border-color: #00ff41;
 }
 
 .toggle-switch:checked + .toggle-slider:before {
   transform: translateX(20px);
+  background-color: #00ff41;
 }
 
 .toggle-text {
-  color: #888;
+  color: #666;
   transition: color 0.2s ease;
 }
 
 .toggle-switch:checked ~ .toggle-text {
+  color: #00ff41;
+}
+
+.toggle-label:hover .toggle-text {
   color: white;
+}
+
+.toggle-label:hover .toggle-slider:before {
+  background-color: #888;
+}
+
+.toggle-switch:checked + .toggle-slider:hover:before {
+  background-color: #00ff41;
 }
 
 /* --- General List/Footer Styles --- */
@@ -184,30 +223,51 @@
   flex-direction: column;
   width: 100%;
   flex: 1;
-  border-bottom: 1px solid #333;
+  gap: 15px; /* Space between filter sections */
 }
 
 /* Sidebar footer */
 .sidebar-footer {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #333;
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sidebar-description {
   font-family: "Space Mono", monospace;
   font-size: 10px;
   color: #555;
-  line-height: 1.6;
+  line-height: 1.8;
   margin: 0;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
   .sidebar-content {
-    padding: 0 15px;
-    padding-top: 15px;
+    padding: 15px 15px;
+    gap: 12px;
+  }
+
+  .sidebar-collapsible-item .collapsible-header {
+    padding: 12px 12px 10px 12px;
+    font-size: 10px;
+  }
+
+  .sidebar-option {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+
+  .in-stock-toggle-wrapper {
+    padding: 12px;
+  }
+
+  .sidebar-footer {
+    padding: 15px;
   }
 }
 
@@ -215,30 +275,69 @@
   .sidebar-below-hero {
     padding: 0;
   }
+
   .sidebar-content {
-    padding-top: 10px;
+    padding: 10px 10px;
+    gap: 10px;
   }
-  /* REMOVED: .sidebar-logo-wrapper responsive styles */
+
   .sidebar-collapsible-item .collapsible-header {
-    font-size: 12px;
-    padding: 10px 0;
+    font-size: 10px;
+    padding: 10px;
   }
+
   .sidebar-option {
     font-size: 11px;
-    padding: 6px 10px;
+    padding: 8px 10px;
   }
+
   .toggle-label {
-    font-size: 12px;
+    font-size: 10px;
   }
+
   .toggle-slider {
-    width: 35px;
-    height: 18px;
+    width: 38px;
+    height: 20px;
   }
+
   .toggle-slider:before {
     height: 14px;
     width: 14px;
   }
+
   .toggle-switch:checked + .toggle-slider:before {
-    transform: translateX(17px);
+    transform: translateX(18px);
   }
+
+  .sidebar-footer {
+    padding: 12px;
+    margin-top: 15px;
+  }
+
+  .sidebar-description {
+    font-size: 9px;
+  }
+}
+
+/* Smooth scrolling for sidebar */
+.sidebar-below-hero {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for sidebar content */
+.sidebar-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 65, 0.2);
+  border-radius: 2px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 65, 0.4);
 }

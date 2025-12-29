@@ -1,39 +1,53 @@
-/* Prevent horizontal overflow globally */
-html,
-body {
-  overflow-x: hidden;
-  max-width: 100%;
-}
+/* src/App.css */
 
-#root {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-.App {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* Ensure all containers are constrained */
+/* Global box-sizing */
 * {
   box-sizing: border-box;
 }
 
-/* Prevent horizontal scrolling */
+/* Clean global styles */
+html,
 body {
-  position: relative;
+  margin: 0;
+  padding: 0;
   width: 100%;
+  max-width: 100%;
 }
-/* In App.css or MainNavbar.css */
 
+#root {
+  width: 100%;
+  max-width: 100%;
+}
+
+.App {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Coming Soon and 404 Pages */
+.coming-soon,
+.not-found {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Space Mono", monospace;
+  font-size: 1.2rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 40px 20px;
+}
+
+.not-found {
+  color: #00ff41;
+  font-size: 1.5rem;
+}
+
+/* Accessibility: Reduced motion for animations */
 @media (prefers-reduced-motion: reduce) {
   .threadrot-logo-svg filter #rotFilter feTurbulence animate {
-    animation-play-state: paused !important; /* Pause the animation */
+    animation-play-state: paused !important;
   }
 }
-
-/* Temporary debug to see what's causing overflow */
-/* * {
-  outline: 1px solid red !important;
-} */

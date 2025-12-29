@@ -2,11 +2,11 @@
 import React from "react";
 import ArchiveLogo from "../../UI/ArchiveLogo";
 import { Link } from "react-router-dom";
-import "./MainNavbar.css"; // For potential logo specific styles
+import "./MainNavbar.css";
 
 const NavbarLogo: React.FC = () => (
   <Link to="/" className="navbar-logo-link">
-    <ArchiveLogo width={160} /> {/* Adjust width for Navbar */}
+    <ArchiveLogo width={200} /> {/* Changed from 160 to 200 for consistency */}
   </Link>
 );
 

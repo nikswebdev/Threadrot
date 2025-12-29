@@ -1,14 +1,10 @@
 /* src/components/Hero/HeroSection.css */
 
 .hero-section {
-  width: 100vw;
+  width: 100%;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  /* Keep top padding, removed bottom padding as per previous request */
-  padding-top: 80px;
+  /* Remove top padding since we have fixed headers now */
+  padding-top: 40px;
   padding-bottom: 40px;
   padding-left: 0;
   padding-right: 0;
@@ -42,7 +38,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  color: white; /* Default color for the entire title */
+  color: white;
 }
 
 .hero-line {
@@ -58,7 +54,7 @@
 
 .hero-line:last-child {
   font-size: 4.5rem;
-  color: white; /* Applies to "MAKE IT" */
+  color: white;
   font-weight: 900;
   text-shadow: 0 0 10px rgba(0, 255, 65, 0.6), 0 0 20px rgba(0, 255, 65, 0.4);
 }
@@ -84,8 +80,7 @@
   }
 }
 
-/* Glitch effects (rules remain but will render empty content
-   because `data-text` attribute was removed from `hero-line:last-child`) */
+/* Glitch effects */
 .hero-line:last-child::before,
 .hero-line:last-child::after {
   content: attr(data-text);
@@ -153,8 +148,13 @@
   }
 }
 
-/* Responsive adjustments for hero title and content */
+/* Responsive adjustments */
 @media (max-width: 768px) {
+  .hero-section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
   .hero-title {
     font-size: 2.5rem;
   }
@@ -170,11 +170,10 @@
   }
 }
 
-/* Small mobile devices */
 @media (max-width: 480px) {
   .hero-section {
-    padding-top: 60px;
-    padding-bottom: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
   .hero-title {
     font-size: 2rem;
@@ -191,11 +190,10 @@
   }
 }
 
-/* Landscape mode optimization */
 @media (max-height: 500px) and (orientation: landscape) {
   .hero-section {
-    padding-top: 50px;
-    padding-bottom: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
   .hero-content {
     padding: 20px 15px;
@@ -212,7 +210,7 @@
   }
 }
 
-/* Accessibility: Reduced motion for animations */
+/* Accessibility: Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .hero-line:last-child::before,
   .hero-line:last-child::after,
@@ -225,7 +223,7 @@
   }
 }
 
-/* High contrast mode support */
+/* High contrast mode */
 @media (prefers-contrast: high) {
   .hero-content {
     background: rgba(0, 0, 0, 0.9);
@@ -244,7 +242,7 @@
   }
 }
 
-/* Dark mode support (already dark, but ensures consistency) */
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
   .hero-section {
     background: #121212;

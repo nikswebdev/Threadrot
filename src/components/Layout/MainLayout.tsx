@@ -1,5 +1,5 @@
 // src/components/Layout/MainLayout.tsx
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
 import { useScreenSize } from "../../hooks/useScreenSize";
@@ -10,6 +10,7 @@ import HeroSection from "../Hero/HeroSection";
 import MainNavbar from "./Navbar/MainNavbar";
 import MobileHeader from "./Navbar/MobileHeader";
 import FilterSortBar from "../Products/FilterSortBar";
+import MobileMenu from "./Navbar/MobileMenu";
 
 import "./Layout.css";
 
@@ -24,8 +25,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const isMobile = screenWidth <= 768;
   const isHomePage = location.pathname === "/";
 
+  // State for mobile menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const handleHamburgerClick = () => {
-    console.log("Menu clicked");
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -35,25 +43,25 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <div className="main-content-wrapper">
         <MemeBackground screenWidth={screenWidth} />
 
-        {/* 1. Navbar */}
+        {/* Navbar */}
         {isMobile ? (
           <MobileHeader onHamburgerClick={handleHamburgerClick} />
         ) : (
           <MainNavbar />
         )}
 
-        {/* 2. Hero Section (Full Width) */}
-        {isHomePage && <HeroSection />}
-
-        {/* 3. Filter/Sort Bar (Full Width) - NEW LOCATION */}
-        {isHomePage && (
-          <FilterSortBar
-            onFilterClick={() => console.log("Filter")}
-            onSortClick={() => console.log("Sort")}
-          />
+        {/* Mobile Menu Overlay */}
+        {isMobile && (
+          <MobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
         )}
 
-        {/* 4. The Split Layout (Sidebar + Content) */}
+        {/* Hero Section (Full Width) */}
+        {isHomePage && <HeroSection />}
+
+        {/* Filter/Sort Bar (Full Width) */}
+        {isHomePage && <FilterSortBar />}
+
+        {/* The Split Layout (Sidebar + Content) */}
         <div className="content-split-layout">
           <aside className="layout-sidebar">
             <Sidebar />
