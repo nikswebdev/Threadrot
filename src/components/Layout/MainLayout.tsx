@@ -1,4 +1,4 @@
-// src/components/Layout/MainLayout.tsx
+// src/components/Layout/MainLayout.tsx - CONDITIONAL SIDEBAR
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
@@ -9,7 +9,6 @@ import MemeBackground from "../Background/MemeBackground";
 import HeroSection from "../Hero/HeroSection";
 import MainNavbar from "./Navbar/MainNavbar";
 import MobileHeader from "./Navbar/MobileHeader";
-import FilterSortBar from "../Products/FilterSortBar";
 import MobileMenu from "./Navbar/MobileMenu";
 
 import "./Layout.css";
@@ -24,6 +23,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const location = useLocation();
   const isMobile = screenWidth <= 768;
   const isHomePage = location.pathname === "/";
+
+  // Hide sidebar on product detail pages
+  const isProductPage = location.pathname.startsWith("/product/");
 
   // State for mobile menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -55,19 +57,28 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           <MobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
         )}
 
-        {/* Hero Section (Full Width) */}
+        {/* Hero Section (Full Width - Home Page Only) */}
         {isHomePage && <HeroSection />}
 
-        {/* Filter/Sort Bar (Full Width) */}
-        {isHomePage && <FilterSortBar />}
-
-        {/* The Split Layout (Sidebar + Content) */}
+        {/* The Split Layout (Sidebar + Content) OR Full Width */}
         <div className="content-split-layout">
-          <aside className="layout-sidebar">
-            <Sidebar />
-          </aside>
+          {/* Show sidebar on non-product pages */}
+          {!isProductPage && (
+            <aside className="layout-sidebar">
+              <Sidebar />
+            </aside>
+          )}
 
-          <main className="layout-main-content">{children}</main>
+          {/* Main content - full width on product pages, normal on others */}
+          <main
+            className={
+              isProductPage
+                ? "layout-full-width-content"
+                : "layout-main-content"
+            }
+          >
+            {children}
+          </main>
         </div>
       </div>
     </div>

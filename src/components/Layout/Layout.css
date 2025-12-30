@@ -1,95 +1,56 @@
-/* src/components/Layout/Layout.css - FIXED for sticky positioning */
-
-:root {
-  --marquee-height: 50px;
-  --navbar-height-desktop: 60px;
-  --navbar-height-mobile: 45px;
-  --sidebar-width: 300px;
-}
+/* src/components/Layout/Layout.css - WITH FULL WIDTH OPTION */
 
 .main-app-container {
   min-height: 100vh;
-  position: relative;
   background: #121212;
-  width: 100%;
-  /* REMOVED: overflow-x: hidden - This was breaking sticky! */
-  margin: 0;
-  padding: 0;
+  position: relative;
 }
 
 .main-content-wrapper {
-  /* NO padding-top needed since marquee is not fixed */
-  min-height: calc(100vh - var(--marquee-height));
   position: relative;
-  width: 100%;
-  margin: 0;
+  min-height: 100vh;
 }
 
+/* Split Layout (Sidebar + Content) */
 .content-split-layout {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  position: relative;
-  z-index: 2;
-  min-height: 80vh;
+  gap: 30px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 30px;
 }
 
 .layout-sidebar {
-  flex: 0 0 var(--sidebar-width);
-  max-width: var(--sidebar-width);
-  border-right: 1px solid #333;
-  background: #121212;
-  position: sticky;
-  top: calc(var(--marquee-height) + var(--navbar-height-desktop));
-  height: calc(100vh - var(--marquee-height) - var(--navbar-height-desktop));
-  overflow-y: auto;
-  z-index: 20;
+  width: 280px;
+  flex-shrink: 0;
 }
 
 .layout-main-content {
   flex: 1;
-  padding: 40px 60px;
   min-width: 0;
 }
 
-/* Hide sidebar below 997px - FilterSortBar handles filtering */
-@media (max-width: 996px) {
+/* Full Width Layout (Product Pages) - Inside split layout container */
+.layout-full-width-content {
+  width: 100%;
+  /* No max-width restriction - takes full space of parent */
+  padding: 0;
+  grid-column: 1 / -1; /* Span full width if parent is grid */
+}
+
+/* Responsive */
+@media (max-width: 997px) {
   .layout-sidebar {
     display: none;
   }
 
-  .layout-main-content {
-    padding: 30px 40px;
+  .content-split-layout {
+    padding: 0 20px;
   }
 }
 
-/* Mobile Layout */
 @media (max-width: 768px) {
   .content-split-layout {
-    flex-direction: column;
+    padding: 0 15px;
   }
-
-  .layout-main-content {
-    padding: 20px;
-  }
-}
-
-/* Sidebar scrollbar styling */
-.layout-sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.layout-sidebar::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
-.layout-sidebar::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
-}
-
-.layout-sidebar::-webkit-scrollbar-thumb:hover {
-  background: #444;
 }

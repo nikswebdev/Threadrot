@@ -1,0 +1,64 @@
+/* src/components/Cart/CartIcon.css */
+
+.cart-icon-button {
+  position: relative;
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  border-radius: 4px;
+}
+
+.cart-icon-button:hover {
+  color: #00ff41;
+  background: rgba(0, 255, 65, 0.05);
+}
+
+.cart-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #00ff41;
+  color: #000;
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  animation: badgePop 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 255, 65, 0.4);
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Accessibility */
+.cart-icon-button:focus {
+  outline: 2px solid #00ff41;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-badge {
+    animation: none;
+  }
+}

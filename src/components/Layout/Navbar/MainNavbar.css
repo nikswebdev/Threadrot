@@ -1,23 +1,58 @@
 /* src/components/Layout/Navbar/MainNavbar.css */
 
+/* src/components/Layout/Navbar/MainNavbar.css */
+
+/* src/components/Layout/Navbar/MainNavbar.css */
+
+/* src/components/Layout/Navbar/MainNavbar.css */
+
+/* src/components/Layout/Navbar/MainNavbar.css */
+
 .main-navbar {
-  position: sticky !important; /* Changed from fixed to sticky */
-  top: 0 !important; /* Sticks to top when scrolling */
-  left: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
+  position: sticky;
+  top: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background: #121212 !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 18, 18, 0.95) 0%,
+    rgba(18, 18, 18, 0.85) 100%
+  );
   backdrop-filter: blur(8px);
-  z-index: 30 !important;
+  z-index: 100; /* Increased to be above hero content */
   color: white;
-  min-height: 60px;
+  min-height: var(--navbar-height-desktop);
   box-sizing: border-box;
-  border-bottom: 1px solid #333;
-  margin: 0 !important;
+}
+/* ... rest of the file ... */
+
+/* NEW: Social Icons alignment (already done, just confirming its here) */
+.social-icons {
+  display: flex;
+  gap: 15px; /* Spacing between social icons */
+}
+
+/* Mobile Responsiveness for Navbar */
+@media (max-width: 768px) {
+  .main-navbar {
+    display: none; /* Hide desktop navbar on mobile */
+  }
+}
+
+/* Remove this media query entirely as it's replaced by MobileHeader.css */
+/* @media (max-width: 768px) { ... } */
+
+/* ... (keep other media queries that are not for 768px breakpoint) ... */
+
+/* NEW: Ensure logo text is always visible on desktop nav */
+@media (max-width: 1000px) {
+  .navbar-logo-link svg text:last-child, /* Make ARCHIVE text visible */
+  .navbar-logo-link svg rect {
+    display: block; /* Show them on desktop */
+  }
 }
 
 .navbar-section {
@@ -40,24 +75,20 @@
 .navbar-section.right {
   flex: 1;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 20px; /* NEW: Spacing between icons */
 }
 
-/* Logo - consistent size */
+/* Navbar Logo */
 .navbar-logo-link {
   display: flex;
   align-items: center;
   text-decoration: none;
 }
 
-.navbar-logo-link svg {
-  width: 200px;
-  height: auto;
-}
-
+/* NEW: Social Icons alignment */
 .social-icons {
   display: flex;
-  gap: 15px;
+  gap: 15px; /* Spacing between social icons */
 }
 
 .nav-item-dropdown-wrapper {
@@ -98,6 +129,7 @@
   color: #00ff41;
 }
 
+/* Dropdown Menu */
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 10px);
@@ -130,30 +162,127 @@
   color: #121212;
 }
 
+/* Social Icons & Shopping Cart */
 .social-icons a,
 .shopping-cart-icon {
   color: #bbb;
   transition: color 0.2s ease;
   display: flex;
   align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  position: relative;
 }
 
 .social-icons a:hover,
 .shopping-cart-icon:hover {
   color: #00ff41;
+  background: rgba(0, 255, 65, 0.05);
+}
+
+/* Cart Badge */
+.cart-item-count {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #00ff41;
+  color: #000;
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  animation: badgePop 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 255, 65, 0.4);
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile Responsiveness for Navbar */
+@media (max-width: 1000px) {
+  .main-navbar {
+    padding: 10px 20px;
+    gap: 15px;
+    min-height: 45px; /* Adjust min-height for smaller screens */
+  }
+
+  .navbar-section.center {
+    gap: 20px;
+  }
+
+  .nav-link,
+  .dropdown-item {
+    font-size: 12px;
+  }
+
+  /* NEW: Logo scaling */
+  .navbar-logo-link svg {
+    width: 140px; /* Explicitly set width to scale */
+    height: auto;
+  }
 }
 
 @media (max-width: 768px) {
   .main-navbar {
-    display: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 15px;
+  }
+
+  .navbar-section.center {
+    display: none;
+  }
+
+  .navbar-section.left,
+  .navbar-section.right {
+    flex: 1; /* Allow them to fill space */
+    width: auto; /* Remove fixed width */
+  }
+
+  .navbar-section.left {
+    justify-content: flex-start;
+  }
+  .navbar-section.right {
+    justify-content: flex-end;
+  }
+
+  .navbar-logo-link svg {
+    width: 120px; /* Even smaller logo on very small screens */
   }
 }
 
+/* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .chevron {
+  .chevron,
+  .cart-item-count {
     transition: none;
+    animation: none;
   }
   .dropdown-menu {
     transition: none;
   }
+}
+
+/* Focus states for accessibility */
+.shopping-cart-icon:focus {
+  outline: 2px solid #00ff41;
+  outline-offset: 2px;
 }

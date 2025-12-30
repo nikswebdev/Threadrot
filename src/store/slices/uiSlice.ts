@@ -1,12 +1,13 @@
-// src/store/slices/uiSlice.ts
+// src/store/slices/uiSlice.ts - FIXED
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UIState } from "../../types";
 
 const initialState: UIState = {
   activeCategory: "ALL",
+  selectedProduct: null, // Added this!
   screenWidth: typeof window !== "undefined" ? window.innerWidth : 1200,
   isLoading: false,
-  gridView: "grid", // Default to grid view
+  gridView: "grid",
 };
 
 const uiSlice = createSlice({

@@ -1,6 +1,5 @@
-// src/components/Products/ProductGrid.tsx
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// src/components/Products/ProductGrid.tsx - WITH GRID VIEW
+import React from "react";
 import { Product } from "../../types";
 import ProductCard from "./ProductCard";
 import { ProductGridSkeleton } from "./ProductCardSkeleton";
@@ -11,17 +10,19 @@ interface ProductGridProps {
   products: Product[];
   loading?: boolean;
   onClearFilters?: () => void;
+  gridView?: "grid" | "compact";
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({
   products,
   loading = false,
   onClearFilters,
+  gridView = "grid",
 }) => {
   // Show loading skeletons
   if (loading) {
     return (
-      <section className="product-grid">
+      <section className={`product-grid ${gridView}`}>
         <ProductGridSkeleton count={8} />
       </section>
     );
@@ -33,7 +34,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   }
 
   return (
-    <section className="product-grid">
+    <section className={`product-grid ${gridView}`}>
       {products.map((product) => (
         <ProductCard
           key={product.id}
@@ -41,13 +42,13 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           name={product.name}
           price={product.price}
           image={product.image}
-          hoverImage={product.hoverImage} // Add this to Product type if not present
+          hoverImage={product.hoverImage}
           category={product.category}
-          isNew={product.isNew} // Add this to Product type if not present
-          isLowStock={product.isLowStock} // Add this to Product type if not present
-          isTrending={product.isTrending} // Add this to Product type if not present
-          stockCount={product.stockCount} // Add this to Product type if not present
-          inStock={product.inStock} // Add this to Product type if not present
+          isNew={product.isNew}
+          isLowStock={product.isLowStock}
+          isTrending={product.isTrending}
+          stockCount={product.stockCount}
+          inStock={product.inStock}
         />
       ))}
     </section>

@@ -1,15 +1,34 @@
-// src/components/Layout/Navbar/ShoppingCartIcon.tsx
+// src/components/Layout/Navbar/ShoppingCartIcon.tsx - WITH CART FUNCTIONALITY
 import React from "react";
 import { ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../../hooks";
+import { toggleCart } from "../../../store/slices/cartSlice";
 import "./MainNavbar.css";
 
-const ShoppingCartIcon: React.FC = () => (
-  <Link to="/cart" className="shopping-cart-icon" aria-label="Shopping Cart">
-    <ShoppingCart size={20} />
-    {/* Optional: Add a badge for item count */}
-    {/* <span className="cart-item-count">3</span> */}
-  </Link>
-);
+const ShoppingCartIcon: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const cartCount = useAppSelector((state) =>
+    state.cart.items.reduce((total: number, item) => total + item.quantity, 0)
+  );
+
+  const handleClick = () => {
+    dispatch(toggleCart());
+  };
+
+  return (
+    <button
+      className="shopping-cart-icon"
+      onClick={handleClick}
+      aria-label="Shopping Cart"
+    >
+      <ShoppingCart size={20} />
+      {cartCount > 0 && (
+        <span className="cart-item-count">
+          {cartCount > 99 ? "99+" : cartCount}
+        </span>
+      )}
+    </button>
+  );
+};
 
 export default ShoppingCartIcon;

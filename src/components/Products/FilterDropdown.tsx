@@ -1,5 +1,6 @@
-// src/components/Products/FilterDropdown.tsx
+// src/components/Products/FilterDropdown.tsx - WITH PORTAL
 import React, { useState } from "react";
+import ReactDOM from "react-dom";
 import { X, ChevronDown } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { setActiveCategory } from "../../store/slices/uiSlice";
@@ -48,17 +49,11 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen, onClose }) => {
     dispatch(filterProducts(categoryId));
   };
 
-  const handleFilterOptionClick = (
-    filterType: FilterKeys,
-    optionId: string
-  ) => {
-    setActiveFilters((prev) => {
-      const newFilterValue = optionId === prev[filterType] ? "" : optionId;
-      return {
-        ...prev,
-        [filterType]: newFilterValue,
-      };
-    });
+  const handleFilterChange = (filterType: FilterKeys, value: string) => {
+    setActiveFilters((prev) => ({
+      ...prev,
+      [filterType]: prev[filterType] === value ? "" : value,
+    }));
   };
 
   const toggleSection = (section: string) => {
@@ -81,13 +76,20 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen, onClose }) => {
   };
 
   const hasActiveFilters =
-    activeCategory !== "all" ||
-    Object.values(activeFilters).some((val) => val !== "") ||
+    activeFilters.style ||
+    activeFilters.color ||
+    activeFilters.brand ||
+    activeFilters.size ||
     inStockOnly;
+
+  const handleApply = () => {
+    onClose();
+  };
 
   if (!isOpen) return null;
 
-  return (
+  // Render using Portal to escape stacking context
+  return ReactDOM.createPortal(
     <>
       {/* Backdrop */}
       <div className="filter-dropdown-backdrop" onClick={onClose} />
@@ -98,11 +100,11 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen, onClose }) => {
         <div className="filter-dropdown-header">
           <h3>FILTERS</h3>
           <button className="filter-close-btn" onClick={onClose}>
-            <X size={20} />
+            <X size={24} />
           </button>
         </div>
 
-        {/* Clear All Button */}
+        {/* Clear All (only show if filters are active) */}
         {hasActiveFilters && (
           <div className="filter-clear-section">
             <button className="clear-all-btn" onClick={clearAllFilters}>
@@ -126,17 +128,19 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen, onClose }) => {
             </button>
             {expandedSections.category && (
               <div className="filter-section-options">
-                {categories.map((cat) => (
+                {categories.map((category) => (
                   <div
-                    key={cat.id}
+                    key={category.id}
                     className={`filter-option ${
-                      activeCategory === cat.id ? "active" : ""
+                      activeCategory === category.id ? "active" : ""
                     }`}
-                    onClick={() => handleCategoryChange(cat.id)}
+                    onClick={() => handleCategoryChange(category.id)}
                   >
-                    <span>{cat.label}</span>
-                    {cat.year && (
-                      <span className="filter-option-year">{cat.year}</span>
+                    <span>{category.label}</span>
+                    {category.year && (
+                      <span className="filter-option-year">
+                        {category.year}
+                      </span>
                     )}
                   </div>
                 ))}
@@ -157,15 +161,15 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen, onClose }) => {
             </button>
             {expandedSections.style && (
               <div className="filter-section-options">
-                {filterOptions.styles.map((option) => (
+                {filterOptions.styles.map((style) => (
                   <div
-                    key={option.id}
+                    key={style.id}
                     className={`filter-option ${
-                      activeFilters.style === option.id ? "active" : ""
+                      activeFilters.style === style.id ? "active" : ""
                     }`}
-                    onClick={() => handleFilterOptionClick("style", option.id)}
+                    onClick={() => handleFilterChange("style", style.id)}
                   >
-                    {option.label}
+                    {style.label}
                   </div>
                 ))}
               </div>
@@ -185,15 +189,15 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen, onClose }) => {
             </button>
             {expandedSections.color && (
               <div className="filter-section-options">
-                {filterOptions.colors.map((option) => (
+                {filterOptions.colors.map((color) => (
                   <div
-                    key={option.id}
+                    key={color.id}
                     className={`filter-option ${
-                      activeFilters.color === option.id ? "active" : ""
+                      activeFilters.color === color.id ? "active" : ""
                     }`}
-                    onClick={() => handleFilterOptionClick("color", option.id)}
+                    onClick={() => handleFilterChange("color", color.id)}
                   >
-                    {option.label}
+                    {color.label}
                   </div>
                 ))}
               </div>
@@ -213,15 +217,15 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen, onClose }) => {
             </button>
             {expandedSections.brand && (
               <div className="filter-section-options">
-                {filterOptions.brands.map((option) => (
+                {filterOptions.brands.map((brand) => (
                   <div
-                    key={option.id}
+                    key={brand.id}
                     className={`filter-option ${
-                      activeFilters.brand === option.id ? "active" : ""
+                      activeFilters.brand === brand.id ? "active" : ""
                     }`}
-                    onClick={() => handleFilterOptionClick("brand", option.id)}
+                    onClick={() => handleFilterChange("brand", brand.id)}
                   >
-                    {option.label}
+                    {brand.label}
                   </div>
                 ))}
               </div>
@@ -241,15 +245,15 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen, onClose }) => {
             </button>
             {expandedSections.size && (
               <div className="filter-section-options">
-                {filterOptions.sizes.map((option) => (
+                {filterOptions.sizes.map((size) => (
                   <div
-                    key={option.id}
+                    key={size.id}
                     className={`filter-option ${
-                      activeFilters.size === option.id ? "active" : ""
+                      activeFilters.size === size.id ? "active" : ""
                     }`}
-                    onClick={() => handleFilterOptionClick("size", option.id)}
+                    onClick={() => handleFilterChange("size", size.id)}
                   >
-                    {option.label}
+                    {size.label}
                   </div>
                 ))}
               </div>
@@ -271,14 +275,15 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Footer - Apply Button */}
+        {/* Footer */}
         <div className="filter-dropdown-footer">
-          <button className="apply-filters-btn" onClick={onClose}>
+          <button className="apply-filters-btn" onClick={handleApply}>
             APPLY FILTERS
           </button>
         </div>
       </div>
-    </>
+    </>,
+    document.body // Portal to document.body - escapes all stacking contexts!
   );
 };
 

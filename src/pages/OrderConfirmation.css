@@ -1,0 +1,486 @@
+/* src/pages/OrderConfirmation.css */
+
+.order-confirmation-page {
+  min-height: 100vh;
+  background: #121212;
+  padding: 60px 20px;
+}
+
+.order-confirmation-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.order-confirmation-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Success Header */
+.confirmation-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.success-icon {
+  margin: 0 auto 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(0, 255, 65, 0.1);
+  border: 2px solid #00ff41;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: successPop 0.5s ease;
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.success-icon svg {
+  color: #00ff41;
+}
+
+.confirmation-header h1 {
+  font-family: "Space Mono", monospace;
+  font-size: 36px;
+  font-weight: 700;
+  color: #00ff41;
+  margin: 0 0 15px 0;
+  letter-spacing: 2px;
+}
+
+.confirmation-message {
+  font-family: "Space Mono", monospace;
+  font-size: 15px;
+  color: #bbb;
+  margin: 0 0 15px 0;
+  line-height: 1.6;
+}
+
+.confirmation-message strong {
+  color: #00ff41;
+}
+
+.order-number {
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+.order-number span {
+  color: #00ff41;
+  font-weight: 700;
+}
+
+/* Order Timeline */
+.order-timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 900px;
+  margin: 0 auto 50px;
+  padding: 30px;
+  background: #1a1a1a;
+  border: 1px solid #222;
+  border-radius: 8px;
+}
+
+.timeline-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.timeline-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #222;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.timeline-step.active .timeline-icon {
+  background: rgba(0, 255, 65, 0.1);
+  border-color: #00ff41;
+  color: #00ff41;
+}
+
+.timeline-content h3 {
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #666;
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.timeline-step.active .timeline-content h3 {
+  color: #00ff41;
+}
+
+.timeline-content p {
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  color: #555;
+  margin: 0;
+}
+
+.timeline-connector {
+  flex: 0.5;
+  height: 2px;
+  background: #333;
+  margin-top: 24px;
+}
+
+/* Main Content */
+.confirmation-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.confirmation-main {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.order-section {
+  background: #1a1a1a;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.order-section h2 {
+  font-family: "Space Mono", monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Order Items */
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.order-item {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  background: #121212;
+  border: 1px solid #222;
+  border-radius: 6px;
+}
+
+.order-item img {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #222;
+  flex-shrink: 0;
+}
+
+.order-item-details {
+  flex: 1;
+}
+
+.order-item-details h4 {
+  font-family: "Space Mono", monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px 0;
+}
+
+.order-item-meta {
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+.order-item-price {
+  font-family: "Space Mono", monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: #00ff41;
+  margin: 0;
+  align-self: flex-start;
+}
+
+/* Address Box */
+.address-box {
+  padding: 20px;
+  background: #121212;
+  border: 1px solid #222;
+  border-radius: 6px;
+}
+
+.address-box p {
+  font-family: "Space Mono", monospace;
+  font-size: 14px;
+  color: #bbb;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* Sidebar */
+.confirmation-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: flex-start;
+}
+
+.order-summary-card,
+.next-steps-card {
+  background: #1a1a1a;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+.order-summary-card h3,
+.next-steps-card h3 {
+  font-family: "Space Mono", monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: #00ff41;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* Summary Totals */
+.summary-totals {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  color: #bbb;
+}
+
+.summary-row.discount {
+  color: #00ff41;
+}
+
+.summary-row.total {
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid #333;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.summary-row.total span:last-child {
+  color: #00ff41;
+  font-size: 20px;
+}
+
+/* Download Receipt Button */
+.download-receipt-btn {
+  width: 100%;
+  padding: 12px;
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: transparent;
+  border: 2px solid #00ff41;
+  color: #00ff41;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.download-receipt-btn:hover {
+  background: rgba(0, 255, 65, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Next Steps */
+.next-steps-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.next-steps-card li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  color: #bbb;
+  line-height: 1.5;
+}
+
+.next-steps-card li svg {
+  color: #00ff41;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Action Buttons */
+.confirmation-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.continue-shopping-btn,
+.view-orders-btn {
+  padding: 14px 32px;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.continue-shopping-btn {
+  background: #00ff41;
+  color: #000;
+  border: none;
+}
+
+.continue-shopping-btn:hover {
+  background: #00cc34;
+  transform: translateY(-2px);
+}
+
+.view-orders-btn {
+  background: transparent;
+  border: 2px solid #00ff41;
+  color: #00ff41;
+}
+
+.view-orders-btn:hover {
+  background: rgba(0, 255, 65, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .confirmation-content {
+    grid-template-columns: 1fr;
+  }
+
+  .confirmation-sidebar {
+    order: -1;
+  }
+
+  .order-timeline {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-confirmation-page {
+    padding: 40px 15px;
+  }
+
+  .confirmation-header h1 {
+    font-size: 28px;
+  }
+
+  .order-timeline {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .timeline-connector {
+    width: 2px;
+    height: 30px;
+    margin: 0 auto;
+  }
+
+  .order-section {
+    padding: 20px;
+  }
+
+  .order-summary-card,
+  .next-steps-card {
+    padding: 20px;
+  }
+
+  .confirmation-actions {
+    flex-direction: column;
+  }
+
+  .continue-shopping-btn,
+  .view-orders-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .confirmation-header h1 {
+    font-size: 24px;
+  }
+
+  .order-item img {
+    width: 60px;
+    height: 75px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .success-icon,
+  * {
+    animation: none;
+    transition: none;
+  }
+}

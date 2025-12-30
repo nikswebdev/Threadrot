@@ -1,6 +1,6 @@
 // src/pages/Archive.tsx
 import React from "react";
-import ProductGrid from "../components/Products/ProductGrid";
+import ProductGridContainer from "../components/Products/ProductGridContainer";
 
 const Archive: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const Archive: React.FC = () => {
         <h1>FULL ARCHIVE</h1>
         <p>Browse our complete collection of meme artifacts</p>
       </div>
-      <ProductGrid />
+      <ProductGridContainer />
     </div>
   );
 };

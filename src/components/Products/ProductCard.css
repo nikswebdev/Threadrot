@@ -1,4 +1,4 @@
-/* src/components/Products/ProductCard.css */
+/* src/components/Products/ProductCard.css - PROPER SIZING */
 
 .product-card {
   position: relative;
@@ -7,6 +7,8 @@
   overflow: hidden;
   transition: all 0.3s ease;
   border: 1px solid #222;
+  width: 100%; /* Let grid control width */
+  max-width: 100%; /* Don't exceed grid cell */
 }
 
 .product-card:hover {
@@ -25,12 +27,13 @@
   color: inherit;
 }
 
-/* Image Wrapper */
+/* Image Wrapper - Controls card height */
 .product-card-image-wrapper {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 4; /* This creates proper proportions */
   background: #222;
   overflow: hidden;
+  width: 100%;
 }
 
 /* Badges */
@@ -336,7 +339,7 @@
     height: 36px;
   }
 
-  /* Show quick actions on mobile by default (always visible) */
+  /* Show quick actions on mobile by default */
   .product-card-quick-actions {
     opacity: 1;
     transform: translateY(0);
@@ -371,7 +374,7 @@
   }
 }
 
-/* Focus states for keyboard navigation */
+/* Focus states */
 .product-card-link:focus {
   outline: 2px solid #00ff41;
   outline-offset: 2px;

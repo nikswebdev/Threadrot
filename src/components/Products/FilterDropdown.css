@@ -8,7 +8,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 998;
+  z-index: 99998 !important;
   animation: fadeIn 0.2s ease;
 }
 
@@ -24,16 +24,16 @@
 /* Dropdown Panel */
 .filter-dropdown-panel {
   position: fixed;
-  top: 95px; /* Below mobile header (45px) + filter bar (~50px) */
+  top: 110px; /* Below mobile header + marquee + filter bar */
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
   max-width: 500px;
-  max-height: calc(100vh - 110px);
+  max-height: calc(100vh - 130px);
   background: #121212;
   border: 1px solid #333;
   border-radius: 8px;
-  z-index: 999;
+  z-index: 99999 !important;
   display: flex;
   flex-direction: column;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
