@@ -100,34 +100,6 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <div className="admin-dashboard">
-      {/* Header */}
-      <div className="admin-header">
-        <div className="admin-header-left">
-          <h1>THREADROT ADMIN</h1>
-          <p>Dashboard Overview</p>
-        </div>
-        <button className="admin-logout-btn" onClick={handleLogout}>
-          <LogOut size={18} />
-          Logout
-        </button>
-      </div>
-
-      {/* Navigation */}
-      <nav className="admin-nav">
-        <Link to="/admin/dashboard" className="admin-nav-link active">
-          Dashboard
-        </Link>
-        <Link to="/admin/orders" className="admin-nav-link">
-          Orders
-        </Link>
-        <Link to="/admin/products" className="admin-nav-link">
-          Products
-        </Link>
-        <Link to="/admin/customers" className="admin-nav-link">
-          Customers
-        </Link>
-      </nav>
-
       {/* Stats Grid */}
       <div className="admin-stats-grid">
         <div className="admin-stat-card revenue">

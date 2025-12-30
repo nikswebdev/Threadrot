@@ -1,0 +1,332 @@
+/* src/components/Layout/AdminLayout.css - CLEAN ADMIN STYLING */
+
+.admin-layout {
+  min-height: 100vh;
+  background: #f5f5f5; /* Light gray background */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== ADMIN NAVBAR ===== */
+.admin-navbar {
+  background: #fff;
+  border-bottom: 2px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-navbar-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  height: 70px;
+  gap: 30px;
+}
+
+/* Brand */
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "Space Mono", monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: 1px;
+  padding-right: 30px;
+  border-right: 2px solid #e0e0e0;
+}
+
+.admin-brand svg {
+  color: #00ff41;
+}
+
+/* Navigation Links */
+.admin-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+}
+
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-family: "Inter", -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #666;
+  border-radius: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.admin-nav-link:hover {
+  background: #f5f5f5;
+  color: #000;
+}
+
+.admin-nav-link.active {
+  background: #00ff41;
+  color: #000;
+  font-weight: 600;
+}
+
+.admin-nav-link svg {
+  flex-shrink: 0;
+}
+
+/* Actions */
+.admin-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-left: 30px;
+  border-left: 2px solid #e0e0e0;
+}
+
+.view-store-link {
+  font-family: "Inter", -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.view-store-link:hover {
+  color: #00ff41;
+}
+
+.admin-logout-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-family: "Inter", -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  color: #666;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-logout-nav-btn:hover {
+  border-color: #ff4444;
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.05);
+}
+
+/* ===== MAIN CONTENT ===== */
+.admin-main-content {
+  flex: 1;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* ===== GLOBAL ADMIN OVERRIDES ===== */
+/* Update all admin pages to use light theme */
+
+.admin-dashboard,
+.admin-orders-page,
+.admin-order-detail-page {
+  background: transparent !important;
+  min-height: auto !important;
+  padding: 0 !important;
+}
+
+/* Remove duplicate headers since we have navbar */
+.admin-header,
+.admin-page-header,
+.admin-order-detail-header {
+  margin-top: 0;
+}
+
+/* Cards with white background */
+.detail-card,
+.admin-section,
+.admin-stat-card,
+.admin-orders-table-container {
+  background: #fff !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Text colors for light theme */
+.admin-dashboard h1,
+.admin-dashboard h2,
+.admin-page-header h1,
+.admin-order-detail-header h1,
+.detail-card h2,
+.admin-section h2,
+.admin-orders-table th,
+.customer-cell strong,
+.item-info h4,
+.stat-value,
+.admin-section-header h2 {
+  color: #000 !important;
+}
+
+.admin-dashboard p,
+.admin-page-header p,
+.stat-label,
+.admin-orders-table td,
+.text-muted,
+.item-info p,
+.detail-row p,
+.shipping-address p,
+.summary-row,
+.order-date,
+.fulfillment-note,
+.admin-empty-state p {
+  color: #666 !important;
+}
+
+/* Input fields */
+.admin-search,
+.admin-filter-group,
+.tracking-input input,
+.admin-search input {
+  background: #fff !important;
+  border-color: #e0e0e0 !important;
+  color: #000 !important;
+}
+
+.admin-search input::placeholder {
+  color: #999 !important;
+}
+
+/* Tables */
+.admin-orders-table thead,
+.admin-table thead {
+  background: #f9f9f9 !important;
+}
+
+.admin-orders-table tbody tr:hover,
+.admin-table tbody tr:hover {
+  background: #f9f9f9 !important;
+}
+
+.admin-orders-table td,
+.admin-table td {
+  border-bottom-color: #f0f0f0 !important;
+}
+
+/* Order items */
+.order-item-detail,
+.shipping-address {
+  background: #f9f9f9 !important;
+  border-color: #e0e0e0 !important;
+}
+
+/* Icons - keep green accent */
+.stat-icon,
+.detail-card h2 svg,
+.admin-section h2 svg {
+  color: #00ff41 !important;
+}
+
+.admin-search svg,
+.admin-filter-group svg,
+.detail-row svg,
+.order-date svg {
+  color: #999 !important;
+}
+
+/* Buttons - update for light theme */
+.export-btn,
+.add-tracking-btn {
+  background: #00ff41 !important;
+  color: #000 !important;
+}
+
+.back-btn,
+.print-btn,
+.copy-btn,
+.copy-address-btn,
+.clear-filters-btn,
+.admin-filter-group select {
+  background: #fff !important;
+  border-color: #e0e0e0 !important;
+  color: #666 !important;
+}
+
+.back-btn:hover,
+.print-btn:hover,
+.copy-address-btn:hover {
+  border-color: #00ff41 !important;
+  color: #00ff41 !important;
+  background: rgba(0, 255, 65, 0.05) !important;
+}
+
+/* Quick stat */
+.quick-stat {
+  background: rgba(0, 255, 65, 0.1) !important;
+  border-color: rgba(0, 255, 65, 0.3) !important;
+  color: #00a832 !important;
+}
+
+/* Empty state */
+.admin-empty-state svg {
+  color: #ccc !important;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .admin-nav-links {
+    gap: 2px;
+  }
+
+  .admin-nav-link span {
+    display: none;
+  }
+
+  .admin-brand span {
+    display: none;
+  }
+
+  .admin-brand {
+    padding-right: 15px;
+  }
+
+  .view-store-link {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-navbar-container {
+    height: 60px;
+    gap: 10px;
+  }
+
+  .admin-brand {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .admin-nav-actions {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .admin-logout-nav-btn span {
+    display: none;
+  }
+
+  .admin-main-content {
+    padding: 20px 15px;
+  }
+}
