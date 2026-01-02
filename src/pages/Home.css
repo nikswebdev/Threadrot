@@ -1,14 +1,170 @@
-/* src/pages/Home.css */
+/* Additional styles for Home page products section */
 
-.home-page-wrapper {
-  width: 100%;
-  position: relative;
+.products-section {
+  max-width: 1400px;
+  margin: 60px auto;
+  padding: 0 20px;
 }
 
-.product-grid-container {
+.products-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.products-header h2 {
+  font-family: "Space Mono", monospace;
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 10px 0;
+  letter-spacing: 3px;
+}
+
+.products-header p {
+  font-family: "Space Mono", monospace;
+  font-size: 14px;
+  color: #00ff41;
+  margin: 0;
+}
+
+.no-products {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.no-products p {
+  font-family: "Space Mono", monospace;
+  font-size: 16px;
+  color: #888;
+}
+
+/* Filter Sort Bar */
+.filter-sort-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-group label {
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.filter-select {
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 180px;
+}
+
+.filter-select:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 255, 65, 0.3);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #00ff41;
+  background: rgba(0, 255, 65, 0.05);
+}
+
+.filter-select option {
+  background: #000;
+  color: #fff;
+}
+
+/* View Toggle */
+.view-toggle {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.view-btn {
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #888;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.view-btn.active {
+  background: rgba(0, 255, 65, 0.2);
+  border-color: #00ff41;
+  color: #00ff41;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .filter-sort-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .view-toggle {
+    margin-left: 0;
+    justify-content: center;
+  }
+}
+
+/* Make sure images show in product cards */
+.product-card-image {
   width: 100%;
-  max-width: 1250px; /* Your requested max-width */
-  margin: 0 auto; /* Center the grid */
-  padding: 0 20px; /* Internal spacing */
-  box-sizing: border-box;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card-image-container {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  background: #1a1a1a;
 }

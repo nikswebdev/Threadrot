@@ -1,4 +1,6 @@
 import React from "react";
+import AdminProducts from "./pages/Admin/AdminProducts";
+import AdminProductForm from "./pages/Admin/AdminProductForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
@@ -67,6 +69,57 @@ const App: React.FC = () => {
                 }
               />
               <Route
+                path="/admin/dashboard"
+                element={
+                  <AdminLayout>
+                    <AdminDashboard />
+                  </AdminLayout>
+                }
+              />
+              <Route
+                path="/admin/orders"
+                element={
+                  <AdminLayout>
+                    <AdminOrders />
+                  </AdminLayout>
+                }
+              />
+              <Route
+                path="/admin/orders/:orderId"
+                element={
+                  <AdminLayout>
+                    <AdminOrderDetail />
+                  </AdminLayout>
+                }
+              />
+              <Route
+                path="/admin/products"
+                element={
+                  <AdminLayout>
+                    <AdminProducts />
+                  </AdminLayout>
+                }
+              />{" "}
+              {/* ADD */}
+              <Route
+                path="/admin/products/new"
+                element={
+                  <AdminLayout>
+                    <AdminProductForm />
+                  </AdminLayout>
+                }
+              />{" "}
+              {/* ADD */}
+              <Route
+                path="/admin/products/edit/:productId"
+                element={
+                  <AdminLayout>
+                    <AdminProductForm />
+                  </AdminLayout>
+                }
+              />{" "}
+              {/* ADD */}
+              <Route
                 path="/order-confirmation/:orderId"
                 element={
                   <MainLayout>
@@ -74,10 +127,8 @@ const App: React.FC = () => {
                   </MainLayout>
                 }
               />
-
               {/* Admin login - no layout */}
               <Route path="/admin/login" element={<AdminLogin />} />
-
               {/* Admin routes with AdminLayout */}
               <Route
                 path="/admin/dashboard"
@@ -103,7 +154,6 @@ const App: React.FC = () => {
                   </AdminLayout>
                 }
               />
-
               {/* 404 */}
               <Route
                 path="*"

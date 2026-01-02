@@ -1,4 +1,4 @@
-// src/components/Layout/MainLayout.tsx - CONDITIONAL SIDEBAR
+// src/components/Layout/MainLayout.tsx
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
@@ -6,7 +6,7 @@ import { useScreenSize } from "../../hooks/useScreenSize";
 import TopMarquee from "./Header/TopMarquee";
 import Sidebar from "./Sidebar/Sidebar";
 import MemeBackground from "../Background/MemeBackground";
-import HeroSection from "../Hero/HeroSection";
+import Hero from "../Hero/Hero";
 import MainNavbar from "./Navbar/MainNavbar";
 import MobileHeader from "./Navbar/MobileHeader";
 import MobileMenu from "./Navbar/MobileMenu";
@@ -24,18 +24,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const isMobile = screenWidth <= 768;
   const isHomePage = location.pathname === "/";
 
-  // Hide sidebar on product detail pages
-  const isProductPage = location.pathname.startsWith("/product/");
-
-  // State for mobile menu
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Mobile menu state
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleHamburgerClick = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setMobileMenuOpen(true);
   };
 
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
+  const handleCloseMobileMenu = () => {
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -52,33 +49,23 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           <MainNavbar />
         )}
 
-        {/* Mobile Menu Overlay */}
+        {/* Mobile Menu */}
         {isMobile && (
-          <MobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
+          <MobileMenu isOpen={mobileMenuOpen} onClose={handleCloseMobileMenu} />
         )}
 
-        {/* Hero Section (Full Width - Home Page Only) */}
-        {isHomePage && <HeroSection />}
+        {/* Hero Section (Full Width) - Better Hero component */}
+        {isHomePage && <Hero />}
 
-        {/* The Split Layout (Sidebar + Content) OR Full Width */}
+        {/* FilterSortBar is now in Home.tsx, not here */}
+
+        {/* The Split Layout (Sidebar + Content) */}
         <div className="content-split-layout">
-          {/* Show sidebar on non-product pages */}
-          {!isProductPage && (
-            <aside className="layout-sidebar">
-              <Sidebar />
-            </aside>
-          )}
+          <aside className="layout-sidebar">
+            <Sidebar />
+          </aside>
 
-          {/* Main content - full width on product pages, normal on others */}
-          <main
-            className={
-              isProductPage
-                ? "layout-full-width-content"
-                : "layout-main-content"
-            }
-          >
-            {children}
-          </main>
+          <main className="layout-main-content">{children}</main>
         </div>
       </div>
     </div>

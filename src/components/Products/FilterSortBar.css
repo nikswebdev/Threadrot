@@ -1,86 +1,54 @@
-/* src/components/Products/FilterSortBar.css - CSS-ONLY RESPONSIVE */
+/* FilterSortBar.css - ULTRA NO STACKING VERSION */
 
 .filter-sort-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 15px 0;
-  background: #121212;
-  z-index: 25;
-  transition: all 0.3s ease;
-  border-bottom: 1px solid #333;
+  display: flex !important;
+  flex-direction: row !important; /* ← FORCE HORIZONTAL */
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding: 15px 0 !important;
+  background: transparent;
+  backdrop-filter: blur(4px);
+  position: relative;
+  z-index: 15;
+  flex-wrap: nowrap !important; /* ← NEVER WRAP */
+  overflow-x: auto; /* ← Scroll if needed */
+  overflow-y: visible;
 }
 
-/* Desktop: Filter button shows "FILTERS:" and is inactive */
-.filter-button {
-  margin-left: 30px;
-}
-
-.filter-button .filter-text-desktop {
-  display: inline;
-}
-
-.filter-button .filter-text-mobile {
+/* Hide scrollbar */
+.filter-sort-bar::-webkit-scrollbar {
+  height: 0;
   display: none;
 }
 
-/* Desktop (> 997px): Filter button is inactive (sidebar visible) */
-@media (min-width: 998px) {
-  .filter-button {
-    cursor: default;
-    opacity: 0.6;
-    pointer-events: none;
-  }
-
-  .filter-button:hover {
-    background: transparent;
-    color: #888;
-  }
-
-  .filter-button svg {
-    color: #888;
-  }
+/* Sticky - NO GAP - FULL WIDTH */
+.filter-sort-bar.sticky {
+  position: sticky !important;
+  top: calc(var(--navbar-height-desktop) - 5px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100vw !important; /* Full viewport width */
+  margin-left: calc(-50vw + 50%) !important; /* Break out of container */
+  background: rgba(18, 18, 18, 0.98) !important;
+  backdrop-filter: blur(10px);
+  z-index: 25 !important;
+  border-bottom: 1px solid #333;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
 }
 
-/* Tablet/Mobile (≤ 997px): Filter button is active (sidebar hidden) */
-@media (max-width: 997px) {
-  .filter-button .filter-text-desktop {
-    display: none;
-  }
-
-  .filter-button .filter-text-mobile {
-    display: inline;
-  }
-}
-
-/* STICKY ON MOBILE */
 @media (max-width: 768px) {
-  .filter-sort-bar {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 45px;
-    background: #121212;
-    backdrop-filter: blur(10px);
-    border-top: 1px solid #333;
-  }
-
-  .filter-button {
-    margin-left: 15px;
-  }
-
-  .right-controls {
-    margin-right: 15px;
-  }
-
-  .sort-dropdown-wrapper {
-    display: none;
+  .filter-sort-bar.sticky {
+    top: calc(var(--navbar-height-mobile) - 5px) !important;
   }
 }
 
 .control-button {
-  display: flex;
-  align-items: center;
+  display: inline-flex !important; /* ← Changed from flex to inline-flex */
+  align-items: center !important;
   gap: 8px;
   background: transparent;
   border: none;
@@ -93,6 +61,11 @@
   transition: all 0.2s ease;
   padding: 10px 15px;
   border-radius: 4px;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  min-width: fit-content !important;
+  max-width: fit-content !important;
 }
 
 .control-button:hover {
@@ -103,23 +76,44 @@
 .control-button svg {
   color: #888;
   transition: color 0.2s ease;
+  flex-shrink: 0 !important;
 }
 
 .control-button:hover svg {
   color: white;
 }
 
-.right-controls {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-right: 30px;
+/* Filter Button */
+.filter-button {
+  margin-left: 20px;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
 }
 
+/* Right Controls - ABSOLUTELY NO WRAP */
+.right-controls {
+  display: inline-flex !important; /* ← inline-flex instead of flex */
+  flex-direction: row !important; /* ← FORCE HORIZONTAL */
+  align-items: center !important;
+  gap: 12px;
+  margin-right: 20px;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  min-width: fit-content !important;
+  max-width: fit-content !important;
+}
+
+/* Grid View Controls */
 .grid-view-controls {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  display: inline-flex !important;
+  flex-direction: row !important; /* ← FORCE HORIZONTAL */
+  gap: 6px;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  flex-wrap: nowrap !important;
 }
 
 .grid-view-button {
@@ -129,9 +123,17 @@
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 4px;
-  display: flex;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  width: 32px !important; /* Fixed width */
+  height: 32px !important; /* Fixed height */
+  min-width: 32px !important;
+  min-height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
 }
 
 .grid-view-button:hover {
@@ -146,6 +148,10 @@
 
 .grid-view-button svg {
   color: #888;
+  transition: color 0.2s ease;
+  flex-shrink: 0 !important;
+  width: 18px;
+  height: 18px;
 }
 
 .grid-view-button:hover svg,
@@ -153,66 +159,238 @@
   color: #00ff41;
 }
 
+/* Sort Dropdown */
 .sort-dropdown-wrapper {
   position: relative;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
 }
 
 .sort-button {
-  gap: 6px;
-  padding-right: 15px;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px;
+  white-space: nowrap !important;
 }
 
 .sort-label {
-  color: #888;
+  font-size: 11px;
+  color: #666;
+  font-weight: bold;
 }
 
 .sort-value {
+  font-size: 13px;
   color: #bbb;
+  transition: color 0.2s ease;
+}
+
+.control-button:hover .sort-value {
+  color: white;
 }
 
 .sort-chevron {
   transition: transform 0.2s ease;
-  margin-left: 4px;
+  flex-shrink: 0 !important;
 }
 
 .sort-chevron.open {
   transform: rotate(180deg);
-  color: #00ff41;
 }
 
+/* Dropdowns */
+.filter-dropdown-menu,
 .sort-dropdown-menu {
   position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 10px;
-  min-width: 200px;
+  top: calc(100% + 10px);
+  left: 0;
   background: rgba(18, 18, 18, 0.98);
-  backdrop-filter: blur(10px);
   border: 1px solid #333;
-  padding: 8px 0;
-  z-index: 100;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
+  border-radius: 6px;
+  min-width: 200px;
   max-height: 400px;
   overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  backdrop-filter: blur(10px);
 }
 
-.sort-option {
-  padding: 10px 20px;
-  font-family: "Space Mono", monospace;
-  font-size: 12px;
-  color: #888;
+.filter-dropdown-menu {
+  min-width: 250px;
+}
+
+.dropdown-option {
+  padding: 12px 20px;
   cursor: pointer;
+  font-family: "Space Mono", monospace;
+  font-size: 13px;
+  color: #bbb;
   transition: all 0.2s ease;
-  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.sort-option:hover {
+.dropdown-option:last-child {
+  border-bottom: none;
+}
+
+.dropdown-option:hover {
   background: rgba(255, 255, 255, 0.05);
   color: white;
+  padding-left: 25px;
 }
 
-.sort-option.active {
-  color: #00ff41;
+.dropdown-option.active {
   background: rgba(0, 255, 65, 0.1);
+  color: #00ff41;
+  border-left: 3px solid #00ff41;
+  padding-left: 22px;
+}
+
+.filter-section {
+  padding: 15px 20px 5px 20px;
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  color: #666;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-top: 1px solid #333;
+}
+
+.filter-section:first-child {
+  border-top: none;
+  padding-top: 5px;
+}
+
+/* MOBILE - ULTRA COMPACT, NO STACKING */
+@media (max-width: 768px) {
+  .filter-sort-bar {
+    padding: 10px 0 !important;
+  }
+
+  .filter-button {
+    margin-left: 8px;
+    padding: 8px !important;
+  }
+
+  .right-controls {
+    margin-right: 8px;
+    gap: 6px;
+  }
+
+  .grid-view-controls {
+    gap: 4px;
+  }
+
+  .sort-dropdown-wrapper {
+    display: none !important; /* Hide on mobile */
+  }
+
+  /* Hide text on mobile */
+  .filter-button .desktop-text,
+  .filter-button .mobile-text {
+    display: none !important;
+  }
+
+  .control-button {
+    padding: 8px !important;
+    min-width: 32px !important;
+  }
+
+  .grid-view-button {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    padding: 5px !important;
+  }
+
+  .grid-view-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* SMALL - EVEN MORE COMPACT */
+@media (max-width: 480px) {
+  .filter-button {
+    margin-left: 4px;
+    padding: 6px !important;
+  }
+
+  .right-controls {
+    margin-right: 4px;
+    gap: 4px;
+  }
+
+  .grid-view-controls {
+    gap: 3px;
+  }
+
+  .control-button {
+    padding: 6px !important;
+  }
+
+  .grid-view-button {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+    max-width: 26px !important;
+    max-height: 26px !important;
+    padding: 4px !important;
+  }
+
+  .grid-view-button svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* TINY - ABSOLUTE MINIMUM */
+@media (max-width: 360px) {
+  .filter-button {
+    margin-left: 2px;
+    padding: 5px !important;
+  }
+
+  .right-controls {
+    margin-right: 2px;
+    gap: 2px;
+  }
+
+  .grid-view-controls {
+    gap: 2px;
+  }
+
+  .control-button {
+    padding: 5px !important;
+  }
+
+  .grid-view-button {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    padding: 3px !important;
+  }
+
+  .grid-view-button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Desktop - show FILTER text */
+@media (min-width: 769px) {
+  .filter-button .mobile-text {
+    display: none !important;
+  }
+
+  .filter-button .desktop-text {
+    display: inline !important;
+  }
 }

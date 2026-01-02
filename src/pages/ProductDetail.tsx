@@ -1,10 +1,9 @@
-// src/pages/ProductDetail.tsx - COMPLETE PRODUCT PAGE
+// src/pages/ProductDetail.tsx - FETCHES FROM SUPABASE
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { setSelectedProduct } from "../store/slices/productsSlice";
+import { supabase } from "../lib/supabase";
+import { useAppDispatch } from "../hooks";
 import { addToCart } from "../store/slices/cartSlice";
-import { Product } from "../types";
 import {
   Heart,
   ShoppingCart,
@@ -12,58 +11,66 @@ import {
   Shield,
   RotateCcw,
   Share2,
-  ZoomIn,
-  ChevronLeft,
-  ChevronRight,
+  ArrowLeft,
 } from "lucide-react";
 import "./ProductDetail.css";
+
+interface SupabaseProduct {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image: string;
+  category: string;
+  stock: number;
+  is_active: boolean;
+}
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.items);
-  const selectedProduct = useAppSelector(
-    (state) => state.products.selectedProduct
-  );
 
+  const [product, setProduct] = useState<SupabaseProduct | null>(null);
+  const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [isFavorited, setIsFavorited] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isZoomed, setIsZoomed] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
 
-  // Mock data for images (would come from product data)
-  const productImages = selectedProduct
-    ? [
-        selectedProduct.image,
-        selectedProduct.hoverImage || selectedProduct.image,
-        selectedProduct.image, // Mock additional images
-      ].filter(Boolean)
-    : [];
-
-  const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-
-  // Mock related products (would be filtered from actual products)
-  const relatedProducts = products.slice(0, 4);
+  const sizes = ["S", "M", "L", "XL", "XXL"];
 
   useEffect(() => {
     if (id) {
-      const foundProduct = products.find((p: Product) => p.id === id);
-      dispatch(setSelectedProduct(foundProduct));
-      window.scrollTo(0, 0);
+      fetchProduct();
     }
-  }, [id, products, dispatch]);
+  }, [id]);
 
-  if (!selectedProduct) {
-    return (
-      <div className="product-detail-loading">
-        <div className="loading-spinner"></div>
-        <p>Loading product...</p>
-      </div>
-    );
-  }
+  const fetchProduct = async () => {
+    try {
+      console.log("📦 Fetching product:", id);
+
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) {
+        console.error("❌ Error fetching product:", error);
+        throw error;
+      }
+
+      console.log("✅ Product fetched:", data);
+      setProduct(data);
+      setLoading(false);
+    } catch (err) {
+      console.error("❌ Failed to fetch product:", err);
+      setLoading(false);
+      // Redirect to home after 2 seconds
+      setTimeout(() => navigate("/"), 2000);
+    }
+  };
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -71,17 +78,18 @@ const ProductDetail: React.FC = () => {
       return;
     }
 
-    // Add to cart
+    if (!product) return;
+
     dispatch(
       addToCart({
         id: "", // Will be generated in cartSlice
-        productId: selectedProduct.id,
-        name: selectedProduct.name,
-        price: selectedProduct.price,
-        image: selectedProduct.image,
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
         size: selectedSize,
         quantity: quantity,
-        category: selectedProduct.category,
+        category: product.category,
       })
     );
 
@@ -91,295 +99,206 @@ const ProductDetail: React.FC = () => {
 
   const handleFavorite = () => {
     setIsFavorited(!isFavorited);
-    // TODO: Add to wishlist logic
   };
 
   const handleShare = async () => {
+    if (!product) return;
+
     if (navigator.share) {
       try {
         await navigator.share({
-          title: selectedProduct.name,
-          text: `Check out ${selectedProduct.name} on Threadrot!`,
+          title: product.name,
+          text: `Check out ${product.name} on Threadrot!`,
           url: window.location.href,
         });
       } catch (err) {
         console.log("Share failed:", err);
       }
     } else {
-      // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href);
       alert("Link copied to clipboard!");
     }
   };
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % productImages.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? productImages.length - 1 : prev - 1
+  if (loading) {
+    return (
+      <div className="product-detail-loading">
+        <div className="loading-spinner"></div>
+        <p>Loading product...</p>
+      </div>
     );
-  };
+  }
+
+  if (!product) {
+    return (
+      <div className="product-detail-loading">
+        <p>Product not found</p>
+        <button onClick={() => navigate("/")}>Back to Home</button>
+      </div>
+    );
+  }
+
+  const inStock = product.stock > 0;
 
   return (
     <div className="product-detail-page">
-      {/* Breadcrumb */}
-      <div className="breadcrumb">
-        <button onClick={() => navigate("/")} className="breadcrumb-link">
-          Home
-        </button>
-        <span className="breadcrumb-separator">/</span>
-        <button onClick={() => navigate(-1)} className="breadcrumb-link">
-          {selectedProduct.category}
-        </button>
-        <span className="breadcrumb-separator">/</span>
-        <span className="breadcrumb-current">{selectedProduct.name}</span>
-      </div>
+      {/* Back Button */}
+      <button className="back-button" onClick={() => navigate("/")}>
+        <ArrowLeft size={20} />
+        <span>Back to Products</span>
+      </button>
 
-      {/* Main Content */}
-      <div className="product-detail-content">
-        {/* Left: Image Gallery */}
-        <div className="product-gallery">
-          {/* Main Image */}
-          <div className="product-main-image-container">
+      <div className="product-detail-container">
+        {/* Left: Image */}
+        <div className="product-detail-image-section">
+          <div className="product-detail-image-wrapper">
             <img
-              src={productImages[currentImageIndex]}
-              alt={selectedProduct.name}
-              className={`product-main-image ${isZoomed ? "zoomed" : ""}`}
-              onClick={() => setIsZoomed(!isZoomed)}
+              src={product.image}
+              alt={product.name}
+              className="product-detail-image"
             />
-
-            {/* Image Navigation */}
-            {productImages.length > 1 && (
-              <>
-                <button className="image-nav-btn prev" onClick={prevImage}>
-                  <ChevronLeft size={24} />
-                </button>
-                <button className="image-nav-btn next" onClick={nextImage}>
-                  <ChevronRight size={24} />
-                </button>
-              </>
+            {!inStock && (
+              <div className="out-of-stock-overlay">
+                <span>OUT OF STOCK</span>
+              </div>
             )}
-
-            {/* Zoom Indicator */}
-            <div className="zoom-indicator">
-              <ZoomIn size={16} />
-              <span>Click to {isZoomed ? "zoom out" : "zoom in"}</span>
-            </div>
-
-            {/* Badges */}
-            <div className="product-detail-badges">
-              {selectedProduct.isNew && (
-                <span className="badge badge-new">NEW</span>
-              )}
-              {selectedProduct.isTrending && (
-                <span className="badge badge-trending">🔥 TRENDING</span>
-              )}
-              {selectedProduct.isLowStock && selectedProduct.stockCount && (
-                <span className="badge badge-low-stock">
-                  ONLY {selectedProduct.stockCount} LEFT
-                </span>
-              )}
-            </div>
           </div>
-
-          {/* Thumbnail Gallery */}
-          {productImages.length > 1 && (
-            <div className="product-thumbnails">
-              {productImages.map((img, index) => (
-                <button
-                  key={index}
-                  className={`thumbnail ${
-                    index === currentImageIndex ? "active" : ""
-                  }`}
-                  onClick={() => setCurrentImageIndex(index)}
-                >
-                  <img src={img} alt={`View ${index + 1}`} />
-                </button>
-              ))}
-            </div>
-          )}
         </div>
 
         {/* Right: Product Info */}
-        <div className="product-info">
-          {/* Category */}
-          <div className="product-category">{selectedProduct.category}</div>
-
-          {/* Title */}
-          <h1 className="product-title">{selectedProduct.name}</h1>
-
-          {/* Price */}
-          <div className="product-price-section">
-            <span className="product-price">
-              ${selectedProduct.price.toFixed(2)}
-            </span>
-            {selectedProduct.inStock ? (
-              <span className="stock-status in-stock">In Stock</span>
-            ) : (
-              <span className="stock-status out-of-stock">Out of Stock</span>
-            )}
-          </div>
-
-          {/* Description */}
-          <p className="product-description">
-            {selectedProduct.description ||
-              "Limited edition streetwear from the internet's digital archive. Premium quality, maximum rot."}
-          </p>
-
-          {/* Size Selector */}
-          <div className="product-options-section">
-            <label className="option-label">Select Size</label>
-            <div className="size-selector">
-              {sizes.map((size) => (
-                <button
-                  key={size}
-                  className={`size-btn ${
-                    selectedSize === size ? "active" : ""
-                  }`}
-                  onClick={() => setSelectedSize(size)}
-                >
-                  {size}
-                </button>
-              ))}
+        <div className="product-detail-info-section">
+          <div className="product-detail-header">
+            <div>
+              <p className="product-detail-category">{product.category}</p>
+              <h1 className="product-detail-title">{product.name}</h1>
             </div>
-            <button className="size-guide-link">Size Guide</button>
-          </div>
-
-          {/* Quantity Selector */}
-          <div className="product-options-section">
-            <label className="option-label">Quantity</label>
-            <div className="quantity-selector">
-              <button
-                className="quantity-btn"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                disabled={quantity <= 1}
-              >
-                −
-              </button>
-              <span className="quantity-value">{quantity}</span>
-              <button
-                className="quantity-btn"
-                onClick={() => setQuantity(Math.min(10, quantity + 1))}
-                disabled={quantity >= 10}
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          {/* Add to Cart Button */}
-          <div className="product-actions">
             <button
-              className={`add-to-cart-btn ${addedToCart ? "added" : ""}`}
-              onClick={handleAddToCart}
-              disabled={!selectedProduct.inStock}
-            >
-              <ShoppingCart size={20} />
-              <span>{addedToCart ? "ADDED TO CART!" : "ADD TO CART"}</span>
-            </button>
-
-            <button
-              className={`favorite-btn ${isFavorited ? "favorited" : ""}`}
+              className={`favorite-button ${isFavorited ? "favorited" : ""}`}
               onClick={handleFavorite}
             >
-              <Heart size={20} fill={isFavorited ? "#00ff41" : "none"} />
+              <Heart size={24} fill={isFavorited ? "#00ff41" : "none"} />
             </button>
+          </div>
 
-            <button className="share-btn" onClick={handleShare}>
-              <Share2 size={20} />
-            </button>
+          <div className="product-detail-price">
+            <span className="price">${product.price.toFixed(2)}</span>
+          </div>
+
+          {product.description && (
+            <div className="product-detail-description">
+              <p>{product.description}</p>
+            </div>
+          )}
+
+          {/* Size Selector */}
+          {inStock && (
+            <div className="product-detail-sizes">
+              <label className="size-label">SELECT SIZE</label>
+              <div className="size-options">
+                {sizes.map((size) => (
+                  <button
+                    key={size}
+                    className={`size-option ${
+                      selectedSize === size ? "selected" : ""
+                    }`}
+                    onClick={() => setSelectedSize(size)}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Quantity */}
+          {inStock && (
+            <div className="product-detail-quantity">
+              <label className="quantity-label">QUANTITY</label>
+              <div className="quantity-controls">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  disabled={quantity <= 1}
+                >
+                  -
+                </button>
+                <span>{quantity}</span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  disabled={quantity >= 10}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="product-detail-actions">
+            {inStock ? (
+              <>
+                <button
+                  className={`add-to-cart-btn ${addedToCart ? "added" : ""}`}
+                  onClick={handleAddToCart}
+                >
+                  <ShoppingCart size={20} />
+                  <span>{addedToCart ? "ADDED TO CART!" : "ADD TO CART"}</span>
+                </button>
+                <button className="share-btn" onClick={handleShare}>
+                  <Share2 size={20} />
+                </button>
+              </>
+            ) : (
+              <button className="notify-btn" disabled>
+                OUT OF STOCK
+              </button>
+            )}
           </div>
 
           {/* Features */}
           <div className="product-features">
             <div className="feature-item">
               <Truck size={20} />
-              <div className="feature-text">
+              <div>
                 <strong>Free Shipping</strong>
-                <span>On orders over $75</span>
-              </div>
-            </div>
-            <div className="feature-item">
-              <RotateCcw size={20} />
-              <div className="feature-text">
-                <strong>Easy Returns</strong>
-                <span>30-day return policy</span>
+                <p>On orders over $50</p>
               </div>
             </div>
             <div className="feature-item">
               <Shield size={20} />
-              <div className="feature-text">
+              <div>
                 <strong>Secure Payment</strong>
-                <span>SSL encrypted checkout</span>
+                <p>100% protected</p>
+              </div>
+            </div>
+            <div className="feature-item">
+              <RotateCcw size={20} />
+              <div>
+                <strong>Easy Returns</strong>
+                <p>30-day return policy</p>
               </div>
             </div>
           </div>
 
-          {/* Details Accordion */}
-          <div className="product-details-section">
-            <details className="detail-accordion" open>
+          {/* Product Details */}
+          <div className="product-details-accordion">
+            <details open>
               <summary>Product Details</summary>
-              <div className="detail-content">
-                <ul>
-                  <li>100% premium cotton</li>
-                  <li>Screen-printed graphics</li>
-                  <li>Pre-shrunk fabric</li>
-                  <li>Unisex fit</li>
-                  <li>Made with maximum rot</li>
-                </ul>
-              </div>
-            </details>
-
-            <details className="detail-accordion">
-              <summary>Shipping & Returns</summary>
-              <div className="detail-content">
+              <div className="details-content">
                 <p>
-                  <strong>Shipping:</strong> Free shipping on orders over $75.
-                  Standard delivery 5-7 business days.
+                  <strong>Material:</strong> Premium Cotton Blend
                 </p>
                 <p>
-                  <strong>Returns:</strong> 30-day return policy. Items must be
-                  unworn with tags attached.
+                  <strong>Fit:</strong> Regular Fit
                 </p>
-              </div>
-            </details>
-
-            <details className="detail-accordion">
-              <summary>Care Instructions</summary>
-              <div className="detail-content">
-                <ul>
-                  <li>Machine wash cold</li>
-                  <li>Tumble dry low</li>
-                  <li>Do not bleach</li>
-                  <li>Iron inside out if needed</li>
-                </ul>
+                <p>
+                  <strong>Care:</strong> Machine wash cold, tumble dry low
+                </p>
+                <p>
+                  <strong>Print:</strong> High-quality DTG printing
+                </p>
               </div>
             </details>
           </div>
-        </div>
-      </div>
-
-      {/* Related Products */}
-      <div className="related-products-section">
-        <h2 className="related-products-title">YOU MIGHT ALSO LIKE</h2>
-        <div className="related-products-grid">
-          {relatedProducts.map((product) => (
-            <button
-              key={product.id}
-              className="related-product-card"
-              onClick={() => navigate(`/product/${product.id}`)}
-            >
-              <img src={product.image} alt={product.name} />
-              <div className="related-product-info">
-                <h3>{product.name}</h3>
-                <span className="related-product-price">
-                  ${product.price.toFixed(2)}
-                </span>
-              </div>
-            </button>
-          ))}
         </div>
       </div>
     </div>

@@ -1,114 +1,174 @@
-// src/components/Products/FilterSortBar.tsx - WITH DEBUG LOGGING
-import React, { useState } from "react";
-import {
-  ChevronDown,
-  SlidersHorizontal,
-  Grid3x3,
-  LayoutList,
-} from "lucide-react";
-import FilterDropdown from "./FilterDropdown";
+// FilterSortBar-Standalone.tsx - Works without Redux, keeps original style
+import React, { useState, useEffect } from "react";
+import { ChevronDown, Grid3x3, LayoutGrid } from "lucide-react";
 import "./FilterSortBar.css";
 
 interface FilterSortBarProps {
-  onSortClick?: (sortOption: string) => void;
-  gridView?: "grid" | "compact";
-  onGridViewChange?: (view: "grid" | "compact") => void;
+  categories: string[];
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+  selectedSort: string;
+  onSortChange: (sort: string) => void;
+  gridView: "grid" | "compact";
+  onGridViewChange: (view: "grid" | "compact") => void;
 }
 
 const FilterSortBar: React.FC<FilterSortBarProps> = ({
-  onSortClick,
-  gridView = "grid",
+  categories,
+  selectedCategory,
+  onCategoryChange,
+  selectedSort,
+  onSortChange,
+  gridView,
   onGridViewChange,
 }) => {
-  const [isSortOpen, setIsSortOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState("Recommended");
-
-  console.log("🟣 FilterSortBar rendering with gridView:", gridView);
-  console.log("🟣 onGridViewChange function exists?", !!onGridViewChange);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const sortOptions = [
-    "Recommended",
-    "Newest Arrivals",
+    "Newest First",
     "Price: Low to High",
     "Price: High to Low",
-    "Rot Level: High",
+    "Name A-Z",
   ];
 
-  const handleSortSelect = (option: string) => {
-    setSelectedSort(option);
-    setIsSortOpen(false);
-    if (onSortClick) onSortClick(option);
-  };
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-  const handleFilterClick = () => {
-    setIsFilterOpen(!isFilterOpen);
-  };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const closeFilterDropdown = () => {
+  // Handle sticky behavior on mobile after scrolling past hero
+  useEffect(() => {
+    if (!isMobile) {
+      setIsSticky(false);
+      return;
+    }
+
+    const handleScroll = () => {
+      // Assume hero is ~600px tall, adjust as needed
+      const heroHeight = 600;
+      setIsSticky(window.scrollY > heroHeight);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
+
+  const handleCategoryChange = (category: string) => {
+    onCategoryChange(category);
     setIsFilterOpen(false);
   };
 
-  const handleGridClick = () => {
-    console.log("🟣 Grid button clicked!");
-    if (onGridViewChange) {
-      console.log("🟣 Calling onGridViewChange with 'grid'");
-      onGridViewChange("grid");
-    } else {
-      console.log("🟣 ERROR: onGridViewChange is undefined!");
-    }
+  const handleSortSelect = (option: string) => {
+    onSortChange(option);
+    setIsSortOpen(false);
   };
 
-  const handleCompactClick = () => {
-    console.log("🟣 Compact button clicked!");
-    if (onGridViewChange) {
-      console.log("🟣 Calling onGridViewChange with 'compact'");
-      onGridViewChange("compact");
-    } else {
-      console.log("🟣 ERROR: onGridViewChange is undefined!");
-    }
+  const handleGridViewChange = (view: "grid" | "compact") => {
+    onGridViewChange(view);
+  };
+
+  // Convert category names to display format
+  const formatCategoryLabel = (cat: string) => {
+    if (cat === "all") return "All Products";
+    return cat.charAt(0).toUpperCase() + cat.slice(1);
   };
 
   return (
-    <>
-      <div className="filter-sort-bar">
-        {/* Filter Button (Left) */}
+    <div className={`filter-sort-bar ${isSticky ? "sticky" : ""}`}>
+      {/* Left: Filter Button (desktop) / Filter & Sort Button (mobile) */}
+      <div style={{ position: "relative" }}>
         <button
           className="control-button filter-button"
-          onClick={handleFilterClick}
+          onClick={() => setIsFilterOpen(!isFilterOpen)}
         >
-          <SlidersHorizontal size={18} />
-          <span className="filter-text-desktop">FILTERS:</span>
-          <span className="filter-text-mobile">FILTER</span>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+          <span className="desktop-text">FILTER</span>
+          <span className="mobile-text">FILTER & SORT</span>
         </button>
 
-        {/* Right Side Controls */}
-        <div className="right-controls">
-          {/* Grid View Buttons */}
-          <div className="grid-view-controls">
-            <button
-              className={`grid-view-button ${
-                gridView === "grid" ? "active" : ""
-              }`}
-              onClick={handleGridClick}
-              aria-label="Grid view"
-              title="Grid view"
-            >
-              <Grid3x3 size={18} />
-            </button>
-            <button
-              className={`grid-view-button ${
-                gridView === "compact" ? "active" : ""
-              }`}
-              onClick={handleCompactClick}
-              aria-label="Compact view"
-              title="Compact view"
-            >
-              <LayoutList size={18} />
-            </button>
-          </div>
+        {/* Filter Dropdown */}
+        {isFilterOpen && (
+          <div className="filter-dropdown-menu">
+            {/* Category Section */}
+            <div className="filter-section">Category</div>
+            {categories.map((cat) => (
+              <div
+                key={cat}
+                className={`dropdown-option ${
+                  selectedCategory === cat ? "active" : ""
+                }`}
+                onClick={() => handleCategoryChange(cat)}
+              >
+                {formatCategoryLabel(cat)}
+              </div>
+            ))}
 
-          {/* Sort Button with Dropdown */}
+            {/* Mobile: Include Sort Options */}
+            {isMobile && (
+              <>
+                <div className="filter-section">Sort By</div>
+                {sortOptions.map((option) => (
+                  <div
+                    key={option}
+                    className={`dropdown-option ${
+                      selectedSort === option ? "active" : ""
+                    }`}
+                    onClick={() => handleSortSelect(option)}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Right: Grid View Controls + Sort (desktop only) */}
+      <div className="right-controls">
+        {/* Grid View Toggle */}
+        <div className="grid-view-controls">
+          <button
+            className={`grid-view-button ${
+              gridView === "grid" ? "active" : ""
+            }`}
+            onClick={() => handleGridViewChange("grid")}
+            aria-label="Grid view"
+          >
+            <Grid3x3 size={18} />
+          </button>
+          <button
+            className={`grid-view-button ${
+              gridView === "compact" ? "active" : ""
+            }`}
+            onClick={() => handleGridViewChange("compact")}
+            aria-label="Compact view"
+          >
+            <LayoutGrid size={18} />
+          </button>
+        </div>
+
+        {/* Sort Dropdown (Desktop Only) */}
+        {!isMobile && (
           <div className="sort-dropdown-wrapper">
             <button
               className="control-button sort-button"
@@ -127,7 +187,7 @@ const FilterSortBar: React.FC<FilterSortBarProps> = ({
                 {sortOptions.map((option) => (
                   <div
                     key={option}
-                    className={`sort-option ${
+                    className={`dropdown-option ${
                       selectedSort === option ? "active" : ""
                     }`}
                     onClick={() => handleSortSelect(option)}
@@ -138,12 +198,9 @@ const FilterSortBar: React.FC<FilterSortBarProps> = ({
               </div>
             )}
           </div>
-        </div>
+        )}
       </div>
-
-      {/* Filter Dropdown Modal */}
-      <FilterDropdown isOpen={isFilterOpen} onClose={closeFilterDropdown} />
-    </>
+    </div>
   );
 };
 
